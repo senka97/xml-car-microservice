@@ -14,7 +14,7 @@ public class CarClass {
     @Column(name="name", nullable=false)
     private String name;
 
-    @OneToMany(mappedBy = "car_class", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "carClass", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Car> cars;
 
     public CarClass() {
