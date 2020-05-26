@@ -14,7 +14,7 @@ public class FuelType {
     @Column(name="name", nullable=false)
     private String name;
 
-    @OneToMany(mappedBy = "fuel_type", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "fuelType", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Car> cars;
 
     public FuelType() {
