@@ -17,12 +17,16 @@ public class FuelType {
     @OneToMany(mappedBy = "fuelType", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Car> cars;
 
+    @Column(name="removed")
+    private boolean removed;
+
     public FuelType() {
     }
 
-    public FuelType(Long id, String name) {
+    public FuelType(Long id, String name, boolean removed) {
         this.id = id;
         this.name = name;
+        this.removed = false;
         this.cars = new HashSet<>();
     }
 
@@ -48,5 +52,13 @@ public class FuelType {
 
     public void setCars(Set<Car> cars) {
         this.cars = cars;
+    }
+
+    public boolean isRemoved() {
+        return removed;
+    }
+
+    public void setRemoved(boolean removed) {
+        this.removed = removed;
     }
 }

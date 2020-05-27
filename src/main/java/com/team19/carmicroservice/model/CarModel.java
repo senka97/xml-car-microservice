@@ -15,13 +15,17 @@ public class CarModel {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private CarBrand carBrand;
 
+    @Column(name="removed")
+    private boolean removed;
+
     public CarModel() {
     }
 
-    public CarModel(Long id, String name, CarBrand carBrand) {
+    public CarModel(Long id, String name, CarBrand carBrand, boolean removed) {
         this.id = id;
         this.name = name;
         this.carBrand = carBrand;
+        this.removed = false;
     }
 
     public Long getId() {
@@ -46,5 +50,13 @@ public class CarModel {
 
     public void setCarBrand(CarBrand carBrand) {
         this.carBrand = carBrand;
+    }
+
+    public boolean isRemoved() {
+        return removed;
+    }
+
+    public void setRemoved(boolean removed) {
+        this.removed = removed;
     }
 }
