@@ -127,7 +127,7 @@ public class Car {
         this.mileage = mileage;
     }
 
-    public boolean isHasAndroidApp() {
+    public boolean getHasAndroidApp() {
         return hasAndroidApp;
     }
 
