@@ -17,12 +17,16 @@ public class CarBrand {
     @OneToMany(mappedBy = "carBrand", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<CarModel> carModels;
 
+    @Column(name="removed")
+    private boolean removed;
+
     public CarBrand() {
     }
 
-    public CarBrand(Long id, String name) {
+    public CarBrand(Long id, String name, boolean removed) {
         this.id = id;
         this.name = name;
+        this.removed = false;
         this.carModels = new HashSet<CarModel>();
     }
 
@@ -48,5 +52,13 @@ public class CarBrand {
 
     public void setCarModels(Set<CarModel> carModels) {
         this.carModels = carModels;
+    }
+
+    public boolean isRemoved() {
+        return removed;
+    }
+
+    public void setRemoved(boolean removed) {
+        this.removed = removed;
     }
 }
