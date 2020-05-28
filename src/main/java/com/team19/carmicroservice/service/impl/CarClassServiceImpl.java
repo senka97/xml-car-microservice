@@ -1,8 +1,10 @@
 package com.team19.carmicroservice.service.impl;
 
 import com.team19.carmicroservice.dto.CarClassDTO;
+import com.team19.carmicroservice.model.Car;
 import com.team19.carmicroservice.model.CarClass;
 import com.team19.carmicroservice.repository.CarClassRepository;
+import com.team19.carmicroservice.repository.CarRepository;
 import com.team19.carmicroservice.service.CarClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,9 @@ public class CarClassServiceImpl implements CarClassService {
 
     @Autowired
     private CarClassRepository carClassRepository;
+
+    @Autowired
+    private CarRepository carRepository;
 
     @Override
     public List<CarClass> getAllCarClasses() {
@@ -34,9 +39,16 @@ public class CarClassServiceImpl implements CarClassService {
     }
 
     @Override
-    public void removeCarClass(Long id) {
+    public boolean removeCarClass(Long id) {
         CarClass carClass = carClassRepository.getOne(id);
+        List<Car> cars = carRepository.findAll();
+        for (Car c : cars) {
+            if (c.getCarClass().equals(carClass)) {
+                return false;
+            }
+        }
         carClass.setRemoved(true);
         carClassRepository.save(carClass);
+        return true;
     }
 }
