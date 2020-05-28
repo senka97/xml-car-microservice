@@ -7,10 +7,7 @@ import com.team19.carmicroservice.repository.CarRepository;
 import com.team19.carmicroservice.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
-import java.util.List;
-
 
 @Service
 public class CarServiceImpl implements CarService {
