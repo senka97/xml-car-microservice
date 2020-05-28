@@ -99,6 +99,9 @@ insert into fuel_type (name, removed) value ('Diesel', false);
 insert into fuel_type (name, removed) value ('Hybrid', false);
 insert into fuel_type (name, removed) value ('Electric', false);
 
+insert into car (children_seats, rate ,mileage, car_model_id, car_class_id, fuel_type_id, transmission_type_id, has_android_app) value (1, 3.5, 5000, 1,1,1,2, true);
+insert into car (children_seats, rate ,mileage, car_model_id, car_class_id, fuel_type_id, transmission_type_id, has_android_app) value (0, 3.8, 2000, 2, 2,1,3, false);
+insert into car (children_seats, rate ,mileage, car_model_id, car_class_id, fuel_type_id, transmission_type_id, has_android_app) value (2, 4, 10000, 3, 5,2,2, true);
 
 insert into car (car_class_id, car_model_id, transmission_type_id, fuel_type_id, children_seats, rate, mileage, has_android_app)
 value (1, 1, 3, 2, 1, 3.5, 5000, true);
