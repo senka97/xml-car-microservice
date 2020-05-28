@@ -48,7 +48,11 @@ public class CarModelController {
     @DeleteMapping(value = "/{id}")
     @PreAuthorize("hasAuthority('removeCarModel')")
     public ResponseEntity<?> removeCarModel(@PathVariable Long id) {
-        carModelService.removeCarModel(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+
+        if (carModelService.removeCarModel(id)) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }

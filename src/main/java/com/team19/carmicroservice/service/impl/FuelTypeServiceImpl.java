@@ -1,7 +1,9 @@
 package com.team19.carmicroservice.service.impl;
 
 import com.team19.carmicroservice.dto.FuelTypeDTO;
+import com.team19.carmicroservice.model.Car;
 import com.team19.carmicroservice.model.FuelType;
+import com.team19.carmicroservice.repository.CarRepository;
 import com.team19.carmicroservice.repository.FuelTypeRepository;
 import com.team19.carmicroservice.service.FuelTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,9 @@ public class FuelTypeServiceImpl implements FuelTypeService {
 
     @Autowired
     private FuelTypeRepository fuelTypeRepository;
+
+    @Autowired
+    private CarRepository carRepository;
 
     @Override
     public List<FuelType> getAllFuelTypes() {
@@ -34,9 +39,16 @@ public class FuelTypeServiceImpl implements FuelTypeService {
     }
 
     @Override
-    public void removeFuelType(Long id) {
+    public boolean removeFuelType(Long id) {
         FuelType fuelType = fuelTypeRepository.getOne(id);
+        List<Car> cars = carRepository.findAll();
+        for (Car c : cars) {
+            if (c.getFuelType().equals(fuelType)) {
+                return false;
+            }
+        }
         fuelType.setRemoved(true);
         fuelTypeRepository.save(fuelType);
+        return true;
     }
 }
