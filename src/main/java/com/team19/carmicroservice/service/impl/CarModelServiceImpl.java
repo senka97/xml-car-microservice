@@ -58,4 +58,9 @@ public class CarModelServiceImpl implements CarModelService {
         carModelRepository.save(carModel);
         return true;
     }
+
+    @Override
+    public CarModel findByBrandAndModelName(String brandName, String modelName) {
+        return carModelRepository.findByNameAndCarBrandName(modelName,brandName);
+    }
 }

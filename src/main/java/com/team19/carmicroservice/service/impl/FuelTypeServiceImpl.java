@@ -51,4 +51,10 @@ public class FuelTypeServiceImpl implements FuelTypeService {
         fuelTypeRepository.save(fuelType);
         return true;
     }
+
+    @Override
+    public FuelType findByName(String name) {
+        return fuelTypeRepository.findByName(name);
+    }
+
 }

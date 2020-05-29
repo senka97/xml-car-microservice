@@ -1,7 +1,9 @@
 package com.team19.carmicroservice.service.impl;
 
 import com.team19.carmicroservice.dto.CarClassDTO;
+import com.team19.carmicroservice.model.CarBrand;
 import com.team19.carmicroservice.model.Car;
+
 import com.team19.carmicroservice.model.CarClass;
 import com.team19.carmicroservice.repository.CarClassRepository;
 import com.team19.carmicroservice.repository.CarRepository;
@@ -50,5 +52,10 @@ public class CarClassServiceImpl implements CarClassService {
         carClass.setRemoved(true);
         carClassRepository.save(carClass);
         return true;
+    }
+
+    @Override
+    public CarClass findByName(String name) {
+        return carClassRepository.findByName(name);
     }
 }

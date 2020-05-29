@@ -9,5 +9,7 @@ public interface CarModelService {
 
     List<CarModel> getAllCarModelsByIdCarBrand(Long idCarBrand);
     CarModel addCarModel(CarModelDTO carModelDTO, Long idCarBrand);
+    CarModel findByBrandAndModelName(String modelName, String brandName);
     boolean removeCarModel(Long id);
+
 }

@@ -50,4 +50,5 @@ public class CarBrandServiceImpl implements CarBrandService {
         carBrandRepository.save(carBrand);
         return true;
     }
+
 }
