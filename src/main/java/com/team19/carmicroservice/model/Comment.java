@@ -19,11 +19,11 @@ public class Comment {
     @Column(name="date_time")
     private LocalDateTime dateTime;
 
-    @Column(name="replay_content")
-    private String replayContent;
+    @Column(name="reply_content")
+    private String replyContent;
 
-    @Column(name="is_replayed")
-    private boolean isReplayed = false;
+    @Column(name="is_replied")
+    private boolean isReplied = false;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Car car;
@@ -79,20 +79,19 @@ public class Comment {
         this.car = car;
     }
 
-    public String getReplayContent() {
-        return replayContent;
+    public String getReplyContent() {
+        return replyContent;
     }
 
-    public void setReplayContent(String replayContent) {
-        this.replayContent = replayContent;
+    public void setReplyContent(String replyContent) {
+        this.replyContent = replyContent;
     }
 
-
-    public boolean getIsReplayed() {
-        return isReplayed;
+    public boolean getIsReplied() {
+        return isReplied;
     }
 
-    public void setIsReplayed(boolean replayed) {
-        isReplayed = replayed;
+    public void setIsReplied(boolean replied) {
+        isReplied = replied;
     }
 }

@@ -1,6 +1,5 @@
 package com.team19.carmicroservice.dto;
 
-import com.team19.carmicroservice.model.Car;
 import java.time.LocalDateTime;
 
 public class CommentDTO {
@@ -9,17 +8,17 @@ public class CommentDTO {
 
     private Long fromComment;
 
-    private String userName="Petar";
+    private String userName;
 
-    private String userLastname="Petrovic";
+    private String userLastname;
 
     private String content;
 
     private LocalDateTime dateTime;
 
-    private String replayContent;
+    private String replyContent;
 
-    private boolean isReplayed = false;
+    private boolean isReplied= false;
 
     private Long carId;
 
@@ -60,20 +59,20 @@ public class CommentDTO {
         this.dateTime = dateTime;
     }
 
-    public String getReplayContent() {
-        return replayContent;
+    public String getReplyContent() {
+        return replyContent;
     }
 
-    public void setReplayContent(String replayContent) {
-        this.replayContent = replayContent;
+    public void setReplyContent(String replyContent) {
+        this.replyContent = replyContent;
     }
 
-    public boolean getIsReplayed() {
-        return isReplayed;
+    public boolean getIsReplied() {
+        return isReplied;
     }
 
-    public void setIsReplayed(boolean replayed) {
-        isReplayed = replayed;
+    public void setIsReplied(boolean replied) {
+        isReplied = replied;
     }
 
     public Long getCarId() {

@@ -1,6 +1,7 @@
 package com.team19.carmicroservice.service.impl;
 
 import com.team19.carmicroservice.client.AdClient;
+import com.team19.carmicroservice.client.UserClient;
 import com.team19.carmicroservice.dto.AdDTOSimple;
 import com.team19.carmicroservice.dto.CommentDTO;
 import com.team19.carmicroservice.model.Car;
@@ -15,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 @Service
@@ -29,6 +31,9 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private AdClient adClient;
 
+    @Autowired
+    private UserClient userClient;
+
 
     @Override
     public ArrayList<CommentDTO> getCommentsForCar(Long id) {
@@ -36,6 +41,7 @@ public class CommentServiceImpl implements CommentService {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         CustomPrincipal cp = (CustomPrincipal) auth.getPrincipal();
 
+        //dobavljanje ad-a iz ad-service zbog carId
         AdDTOSimple ad = this.adClient.getAdSimple(id,cp.getPermissions(), cp.getUserID(), cp.getToken());
 
         Car car = carService.getCarById(ad.getCarId());
@@ -52,13 +58,15 @@ public class CommentServiceImpl implements CommentService {
                 newC.setContent(c.getContent());
                 newC.setDateTime(c.getDateTime());
                 newC.setFromComment(c.getFromComment());
-                newC.setReplayContent(c.getReplayContent());
-                newC.setIsReplayed(c.getIsReplayed());
+                newC.setReplyContent(c.getReplyContent());
+                newC.setIsReplied(c.getIsReplied());
 
-                //poslati zahtev na user service da se pokupe ime i prezime usera koji je okacio komentar
                 newComments.add(newC);
             }
-            return newComments;
+            // komentari odlaze u user-service da se popuni ime i prezime korisnika koji je ostavio komentar
+            ArrayList<CommentDTO> returnedComments = userClient.getCommentCreator(newComments,cp.getPermissions(), cp.getUserID(), cp.getToken());
+
+            return returnedComments;
         }
         else return null;
     }

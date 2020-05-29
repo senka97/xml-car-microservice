@@ -75,7 +75,37 @@ public class CarServiceImpl implements CarService {
                 carDTO.setCarClass(car.getCarClass().getName());
                 carDTO.setTransType(car.getTransmissionType().getName());
                 carDTO.setFuelType(car.getFuelType().getName());
-                //photos
+
+                if(car.getImages() != null) {
+                    for (Image p : car.getImages()) {
+                        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                        Path path = Paths.get(p.getPath());
+                        // write the image to a file
+                        System.out.println(p.getPath());
+                        File input = path.toFile();
+                        BufferedImage img = null;
+                        try {
+                            img = ImageIO.read(input);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        if(img != null) {
+                            try {
+                                ImageIO.write(img, "png", bos);
+                                byte[] imageBytes = bos.toByteArray();
+
+
+                                String imageString = Base64.getEncoder().encodeToString(imageBytes);
+                                String retStr = "data:image/png;base64," + imageString;
+                                carDTO.getPhotos64().add(retStr);
+                                bos.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+
 
             }
             else
@@ -108,6 +138,37 @@ public class CarServiceImpl implements CarService {
                 carDTO.setTransType(car.getTransmissionType().getName());
                 carDTO.setFuelType(car.getFuelType().getName());
                 //photos
+
+                if(car.getImages() != null) {
+                    for (Image p : car.getImages()) {
+                        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                        Path path = Paths.get(p.getPath());
+                        // write the image to a file
+                        System.out.println(p.getPath());
+                        File input = path.toFile();
+                        BufferedImage img = null;
+                        try {
+                            img = ImageIO.read(input);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        if(img != null) {
+                            try {
+                                ImageIO.write(img, "png", bos);
+                                byte[] imageBytes = bos.toByteArray();
+
+
+                                String imageString = Base64.getEncoder().encodeToString(imageBytes);
+                                String retStr = "data:image/png;base64," + imageString;
+                                carDTO.getPhotos64().add(retStr);
+                                bos.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+
             }
         }
         return ads;
