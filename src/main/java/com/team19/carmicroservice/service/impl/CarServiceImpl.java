@@ -15,6 +15,10 @@ public class CarServiceImpl implements CarService {
     @Autowired
     private CarRepository carRepository;
 
+    @Override
+    public Car getCarById(Long id) {
+        return carRepository.findById(id).orElse(null);
+    }
 
     @Override
     public CarDTO getCar(Long id) {

@@ -11,7 +11,7 @@ public class Comment {
     private Long id;
 
     @Column(name="from_comment")
-    private String fromComment;
+    private Long fromComment;
 
     @Column(name="content")
     private String content;
@@ -19,13 +19,19 @@ public class Comment {
     @Column(name="date_time")
     private LocalDateTime dateTime;
 
+    @Column(name="replay_content")
+    private String replayContent;
+
+    @Column(name="is_replayed")
+    private boolean isReplayed = false;
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Car car;
 
     public Comment() {
     }
 
-    public Comment(Long id, String fromComment, String content, LocalDateTime dateTime, Car car) {
+    public Comment(Long id, Long fromComment, String content, LocalDateTime dateTime, Car car) {
         this.id = id;
         this.fromComment = fromComment;
         this.content = content;
@@ -41,11 +47,11 @@ public class Comment {
         this.id = id;
     }
 
-    public String getFromComment() {
+    public Long getFromComment() {
         return fromComment;
     }
 
-    public void setFromComment(String fromComment) {
+    public void setFromComment(Long fromComment) {
         this.fromComment = fromComment;
     }
 
@@ -71,5 +77,22 @@ public class Comment {
 
     public void setCar(Car car) {
         this.car = car;
+    }
+
+    public String getReplayContent() {
+        return replayContent;
+    }
+
+    public void setReplayContent(String replayContent) {
+        this.replayContent = replayContent;
+    }
+
+
+    public boolean getIsReplayed() {
+        return isReplayed;
+    }
+
+    public void setIsReplayed(boolean replayed) {
+        isReplayed = replayed;
     }
 }

@@ -104,4 +104,9 @@ insert into car (children_seats, rate ,mileage, car_model_id, car_class_id, fuel
 insert into car (children_seats, rate ,mileage, car_model_id, car_class_id, fuel_type_id, transmission_type_id, has_android_app) value (2, 4, 10000, 3, 5,2,2, true);
 insert into car (car_class_id, car_model_id, transmission_type_id, fuel_type_id, children_seats, rate, mileage, has_android_app) value (1, 1, 3, 2, 1, 3.5, 5000, true);
 
-
+insert into comment(content, date_time, from_comment, car_id, replay_content, is_replayed) value ('This car is the best', '2020-04-04', 3, 1, null, false );
+insert into comment(content, date_time, from_comment, car_id, replay_content, is_replayed) value ('This car is the worst', '2020-04-04', 3, 1, 'I am sorry that you feel this way', true );
+insert into comment(content, date_time, from_comment, car_id, replay_content, is_replayed) value ('I love this car', '2020-05-04', 3, 1, null, false );
+insert into comment(content, date_time, from_comment, car_id, replay_content, is_replayed) value ('This car is the worst', '2020-05-04', 3, 1, 'I am sorry that you feel this way', true );
+insert into comment(content, date_time, from_comment, car_id, replay_content, is_replayed) value ('This car is the best', '2020-04-04', 3, 2, null, false );
+insert into comment(content, date_time, from_comment, car_id, replay_content, is_replayed) value ('This car is the worst', '2020-04-04', 3, 2, 'I am sorry that you feel this way', true );
