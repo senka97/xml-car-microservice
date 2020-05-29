@@ -50,4 +50,9 @@ public class TransmissionTypeServiceImpl implements TransmissionTypeService {
         transmissionTypeRepository.save(transmissionType);
         return true;
     }
+
+    @Override
+    public TransmissionType findByName(String name) {
+        return transmissionTypeRepository.findByName(name);
+    }
 }

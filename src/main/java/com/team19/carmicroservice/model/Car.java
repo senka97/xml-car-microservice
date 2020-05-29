@@ -35,6 +35,9 @@ public class Car {
     @Column(name="has_android_app")
     private boolean hasAndroidApp;
 
+    @Column(name="owner_id")
+    private Long ownerId;
+
     @OneToMany(mappedBy = "car", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Image> images;
 
@@ -157,5 +160,17 @@ public class Car {
 
     public void setReports(Set<Report> reports) {
         this.reports = reports;
+    }
+
+    public boolean isHasAndroidApp() {
+        return hasAndroidApp;
+    }
+
+    public Long getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
     }
 }

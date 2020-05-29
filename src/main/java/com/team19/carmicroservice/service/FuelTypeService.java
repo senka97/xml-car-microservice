@@ -9,5 +9,6 @@ public interface FuelTypeService {
 
     List<FuelType> getAllFuelTypes();
     FuelType addFuelType(FuelTypeDTO fuelTypeDTO);
+    FuelType findByName(String name);
     boolean removeFuelType(Long id);
 }
