@@ -38,4 +38,5 @@ public class CarBrandServiceImpl implements CarBrandService {
         carBrand.setRemoved(true);
         carBrandRepository.save(carBrand);
     }
+
 }

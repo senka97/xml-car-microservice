@@ -2,6 +2,7 @@ package com.team19.carmicroservice.controller;
 
 import com.team19.carmicroservice.dto.AdDTO;
 import com.team19.carmicroservice.dto.CarDTO;
+import com.team19.carmicroservice.dto.ExistingCarDTO;
 import com.team19.carmicroservice.service.impl.CarServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -28,6 +29,18 @@ public class CarController {
     public ArrayList<AdDTO> findCars(@RequestBody ArrayList<AdDTO> ads)
     {
         return this.carService.findCars(ads);
+    }
+
+    @PostMapping(value = "/car",consumes = "application/json")
+    public CarDTO addCar(@RequestBody CarDTO carDTO)
+    {
+        return this.carService.addNewCar(carDTO);
+    }
+
+    @GetMapping(value="/car/ad/notActive")
+    public ArrayList<ExistingCarDTO> getCarsWithNoActiveAds()
+    {
+        return this.carService.getCarsWithNoActiveAds();
     }
 
 }

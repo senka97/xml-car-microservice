@@ -38,4 +38,9 @@ public class TransmissionTypeServiceImpl implements TransmissionTypeService {
         transmissionType.setRemoved(true);
         transmissionTypeRepository.save(transmissionType);
     }
+
+    @Override
+    public TransmissionType findByName(String name) {
+        return transmissionTypeRepository.findByName(name);
+    }
 }

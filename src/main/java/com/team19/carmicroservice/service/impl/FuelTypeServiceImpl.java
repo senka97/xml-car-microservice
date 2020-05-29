@@ -39,4 +39,10 @@ public class FuelTypeServiceImpl implements FuelTypeService {
         fuelType.setRemoved(true);
         fuelTypeRepository.save(fuelType);
     }
+
+    @Override
+    public FuelType findByName(String name) {
+        return fuelTypeRepository.findByName(name);
+    }
+
 }
