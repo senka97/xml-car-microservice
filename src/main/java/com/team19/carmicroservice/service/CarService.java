@@ -2,6 +2,7 @@ package com.team19.carmicroservice.service;
 
 import com.team19.carmicroservice.dto.AdDTO;
 import com.team19.carmicroservice.dto.CarDTO;
+import com.team19.carmicroservice.model.Car;
 import com.team19.carmicroservice.dto.ExistingCarDTO;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ public interface CarService {
 
     CarDTO getCar(Long carId);
     ArrayList<AdDTO> findCars(ArrayList<AdDTO> ads);
+    Car getCarById(Long id);
     CarDTO addNewCar(CarDTO carDTO);
     ArrayList<ExistingCarDTO> getCarsWithNoActiveAds();
 }
