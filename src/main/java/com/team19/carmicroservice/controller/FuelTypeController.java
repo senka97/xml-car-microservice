@@ -50,7 +50,11 @@ public class FuelTypeController {
     @DeleteMapping(value = "/{id}")
     @PreAuthorize("hasAuthority('removeFuelType')")
     public ResponseEntity<?> removeFuelType(@PathVariable Long id) {
-        fuelTypeService.removeFuelType(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+
+        if (fuelTypeService.removeFuelType(id)) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }

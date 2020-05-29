@@ -10,6 +10,7 @@ public interface TransmissionTypeService {
 
     List<TransmissionType> getAllTransmissionTypes();
     TransmissionType addTransmissiontype(TransmissionTypeDTO transmissionTypeDTO);
-    void removeTransmissionType(@PathVariable Long id);
     TransmissionType findByName(String name);
+    boolean removeTransmissionType(@PathVariable Long id);
+
 }

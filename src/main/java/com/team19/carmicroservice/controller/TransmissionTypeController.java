@@ -50,7 +50,11 @@ public class TransmissionTypeController {
     @DeleteMapping(value = "/{id}")
     @PreAuthorize("hasAuthority('removeTransmissionType')")
     public ResponseEntity<?> removeTransmissionType(@PathVariable Long id) {
-        transmissionTypeService.removeTransmissionType(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+
+        if (transmissionTypeService.removeTransmissionType(id)) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }

@@ -1,7 +1,9 @@
 package com.team19.carmicroservice.service.impl;
 
 import com.team19.carmicroservice.dto.TransmissionTypeDTO;
+import com.team19.carmicroservice.model.Car;
 import com.team19.carmicroservice.model.TransmissionType;
+import com.team19.carmicroservice.repository.CarRepository;
 import com.team19.carmicroservice.repository.TransmissionTypeRepository;
 import com.team19.carmicroservice.service.TransmissionTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,9 @@ public class TransmissionTypeServiceImpl implements TransmissionTypeService {
 
     @Autowired
     private TransmissionTypeRepository transmissionTypeRepository;
+
+    @Autowired
+    private CarRepository carRepository;
 
     @Override
     public List<TransmissionType> getAllTransmissionTypes() {
@@ -33,10 +38,17 @@ public class TransmissionTypeServiceImpl implements TransmissionTypeService {
     }
 
     @Override
-    public void removeTransmissionType(Long id) {
+    public boolean removeTransmissionType(Long id) {
         TransmissionType transmissionType = transmissionTypeRepository.getOne(id);
+        List<Car> cars = carRepository.findAll();
+        for (Car c : cars) {
+            if(c.getTransmissionType().equals(transmissionType)) {
+                return false;
+            }
+        }
         transmissionType.setRemoved(true);
         transmissionTypeRepository.save(transmissionType);
+        return true;
     }
 
     @Override

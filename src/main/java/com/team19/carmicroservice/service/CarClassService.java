@@ -9,7 +9,6 @@ public interface CarClassService {
 
     List<CarClass> getAllCarClasses();
     CarClass addCarClass(CarClassDTO carClassDTO);
-    void removeCarClass(Long id);
     CarClass findByName(String name);
-
+    boolean removeCarClass(Long id);
 }

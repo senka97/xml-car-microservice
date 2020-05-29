@@ -107,3 +107,4 @@ insert into car (car_class_id, car_model_id, transmission_type_id, fuel_type_id,
 value (1, 1, 3, 2, 1, 3.5, 5000, true, 2);
 
 
+

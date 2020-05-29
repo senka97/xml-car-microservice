@@ -9,5 +9,5 @@ public interface CarBrandService {
 
     List<CarBrand> getAllCarBrands();
     CarBrand addCarBrand(CarBrandDTO carBrandDTO);
-    void removeCarBrand(Long id);
+    boolean removeCarBrand(Long id);
 }
