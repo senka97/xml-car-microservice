@@ -113,8 +113,13 @@ public class CommentServiceImpl implements CommentService {
                 com.setReplyContent(null);
                 com.setReplyStatus(ReplyStatus.NOT_POSTED);
 
-                commentRepository.save(com);
-                return true;
+                //promenim da korisnik vise ne moze komentarisati ovaj oglas
+                if(this.adClient.changeUserComment(ad.getId(),comment.getFromComment(),cp.getPermissions(), cp.getUserID(), cp.getToken()))
+                {
+                    commentRepository.save(com);
+                    return true;
+                }
+                else return false;
             }
             else return false;
         }
