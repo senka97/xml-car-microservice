@@ -15,4 +15,5 @@ public interface CarService {
     Car getCarById(Long id);
     CarDTO addNewCar(CarDTO carDTO);
     ArrayList<ExistingCarDTO> getCarsWithNoActiveAds();
+    ArrayList<CarDTO> searchCars(String brand,String model,String feulType,String classType,String transType, int mileage,int childrenSeats);
 }

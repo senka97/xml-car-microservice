@@ -1,6 +1,17 @@
 package com.team19.carmicroservice.dto;
 
+import com.team19.carmicroservice.model.Car;
+import com.team19.carmicroservice.model.Image;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Base64;
 
 public class CarDTO {
 
@@ -29,6 +40,53 @@ public class CarDTO {
 
     public CarDTO(){
 
+    }
+
+    public CarDTO(Car car){
+        {
+            this.setId(car.getId());
+            this.setChildrenSeats(car.getChildrenSeats());
+            this.setRate(car.getRate());
+            this.setMileage(car.getMileage());
+            this.setHasAndroidApp(car.getHasAndroidApp());
+            this.setCarBrand(car.getCarModel().getCarBrand().getName());
+            this.setCarModel(car.getCarModel().getName());
+            this.setCarClass(car.getCarClass().getName());
+            this.setTransType(car.getTransmissionType().getName());
+            this.setFuelType(car.getFuelType().getName());
+            //photos
+
+            if(car.getImages() != null) {
+                for (Image p : car.getImages()) {
+                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                    Path path = Paths.get(p.getPath());
+                    // write the image to a file
+                    System.out.println(p.getPath());
+                    File input = path.toFile();
+                    BufferedImage img = null;
+                    try {
+                        img = ImageIO.read(input);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    if(img != null) {
+                        try {
+                            ImageIO.write(img, "png", bos);
+                            byte[] imageBytes = bos.toByteArray();
+
+
+                            String imageString = Base64.getEncoder().encodeToString(imageBytes);
+                            String retStr = "data:image/png;base64," + imageString;
+                            this.getPhotos64().add(retStr);
+                            bos.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+
+        }
     }
 
     public Long getId() {

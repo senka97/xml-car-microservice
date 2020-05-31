@@ -15,7 +15,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -78,6 +80,7 @@ public class CarServiceImpl implements CarService {
 
                 if(car.getImages() != null) {
                     for (Image p : car.getImages()) {
+                        System.out.println("**********FOTOGRAFIJA********");
                         ByteArrayOutputStream bos = new ByteArrayOutputStream();
                         Path path = Paths.get(p.getPath());
                         // write the image to a file
@@ -93,7 +96,6 @@ public class CarServiceImpl implements CarService {
                             try {
                                 ImageIO.write(img, "png", bos);
                                 byte[] imageBytes = bos.toByteArray();
-
 
                                 String imageString = Base64.getEncoder().encodeToString(imageBytes);
                                 String retStr = "data:image/png;base64," + imageString;
@@ -325,4 +327,74 @@ public class CarServiceImpl implements CarService {
         return carDTOS;
     }
 
+    @Override
+    public ArrayList<CarDTO> searchCars(String brand, String model, String feulType, String classType, String transType, int mileage, int childrenSeats) {
+        List<Car> cars = carRepository.findAll();
+        ArrayList<CarDTO> carDTOS = new ArrayList<>();
+        for(Car car:cars){
+
+            if(!brand.equals("all")){
+                if(!car.getCarModel().getCarBrand().getName().equals(brand)){
+                    continue;
+                }
+            }
+
+            if(!model.equals("all")){
+                if(!car.getCarModel().getName().equals(model)){
+                    continue;
+                }
+            }
+
+            if(!feulType.equals("all")){
+                if(!car.getFuelType().getName().equals(feulType)){
+                    continue;
+                }
+            }
+
+            if(!classType.equals("all")){
+                if(!car.getCarClass().getName().equals(classType)){
+                    continue;
+                }
+            }
+
+            if(mileage != 0){
+                if(car.getMileage() > mileage){
+                    continue;
+                }
+            }
+
+            if(childrenSeats != 0){
+                if(car.getChildrenSeats() < childrenSeats){
+                    continue;
+                }
+            }
+            CarDTO carDTO = new CarDTO(car);
+            carDTOS.add(carDTO);
+        }
+        return carDTOS;
+    }
+
+    /*
+
+      TODO Pogledati
+
+      Neka funkcija da pomogne oko encodovanja slike
+      Ako je ne resizujem npr treba mu 80 milisekundi da je encoduje
+      A recimo ako je resizujem na 500*500 treba mu 12 milisekundi
+      Druga stvar za koju mu treba puno je citanje slike treba mu oko 80 milisekunidi (snimljena je u punoj velicini)
+      ali mislim da kad je snimimo resizovanu trebace mu manje
+
+      Predlog je naravno da resizujemo na neku velicinu pri snimanju i recimo da ogranicimo broj slika koje oglas moze da ima na tipa 3
+
+    public static BufferedImage resize(BufferedImage img, int newW, int newH) {
+        java.awt.Image tmp = img.getScaledInstance(newW, newH, java.awt.Image.SCALE_SMOOTH);
+        BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
+
+        Graphics2D g2d = dimg.createGraphics();
+        g2d.drawImage(tmp, 0, 0, null);
+        g2d.dispose();
+
+        return dimg;
+    }
+     */
 }
