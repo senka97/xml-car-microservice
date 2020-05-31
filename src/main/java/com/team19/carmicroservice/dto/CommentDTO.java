@@ -20,6 +20,10 @@ public class CommentDTO {
 
     private boolean isReplied= false;
 
+    private String commentStatus;
+
+    private String replyStatus;
+
     private Long carId;
 
     public CommentDTO()
@@ -97,5 +101,21 @@ public class CommentDTO {
 
     public void setUserLastname(String userLastname) {
         this.userLastname = userLastname;
+    }
+
+    public String getCommentStatus() {
+        return commentStatus;
+    }
+
+    public void setCommentStatus(String commentStatus) {
+        this.commentStatus = commentStatus;
+    }
+
+    public String getReplyStatus() {
+        return replyStatus;
+    }
+
+    public void setReplyStatus(String replyStatus) {
+        this.replyStatus = replyStatus;
     }
 }
