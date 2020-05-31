@@ -1,5 +1,8 @@
 package com.team19.carmicroservice.model;
 
+import com.team19.carmicroservice.enums.CommentStatus;
+import com.team19.carmicroservice.enums.ReplyStatus;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -22,8 +25,11 @@ public class Comment {
     @Column(name="reply_content")
     private String replyContent;
 
-    @Column(name="is_replied")
-    private boolean isReplied = false;
+    @Enumerated(EnumType.STRING)
+    private CommentStatus commentStatus;
+
+    @Enumerated(EnumType.STRING)
+    private ReplyStatus replyStatus = ReplyStatus.NOT_POSTED;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Car car;
@@ -87,11 +93,19 @@ public class Comment {
         this.replyContent = replyContent;
     }
 
-    public boolean getIsReplied() {
-        return isReplied;
+    public CommentStatus getCommentStatus() {
+        return commentStatus;
     }
 
-    public void setIsReplied(boolean replied) {
-        isReplied = replied;
+    public void setCommentStatus(CommentStatus commentStatus) {
+        this.commentStatus = commentStatus;
+    }
+
+    public ReplyStatus getReplyStatus() {
+        return replyStatus;
+    }
+
+    public void setReplyStatus(ReplyStatus replyStatus) {
+        this.replyStatus = replyStatus;
     }
 }
