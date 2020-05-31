@@ -39,4 +39,20 @@ public class CarController {
         return this.carService.getCarsWithNoActiveAds();
     }
 
+    @GetMapping(value="/car/{brand}/{model}/{feul_type}/{class_type}/{transmission_type}/{mileage}/{children_seats}")
+    public ArrayList<CarDTO> searchCars(@PathVariable("brand") String brand,@PathVariable("model") String model,
+                                        @PathVariable("feul_type") String feulType,@PathVariable("class_type") String classType,
+                                        @PathVariable("transmission_type") String transType,@PathVariable("mileage") int mileage,
+                                        @PathVariable("children_seats") int childrenSeats)
+    {
+        System.out.println("Searching");
+        System.out.println(brand);
+        System.out.println(model);
+        System.out.println(feulType);
+        System.out.println(classType);
+        System.out.println(transType);
+        System.out.println(mileage);
+        System.out.println(childrenSeats);
+        return this.carService.searchCars(brand,model,feulType,classType,transType,mileage,childrenSeats);
+    }
 }
