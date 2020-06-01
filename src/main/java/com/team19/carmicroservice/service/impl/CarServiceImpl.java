@@ -239,6 +239,7 @@ public class CarServiceImpl implements CarService {
                 // write the image to a file
                 File outputfile = path.toFile();
                 try {
+                    image = resize(image,800,550);
                     ImageIO.write(image, "png", outputfile);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -385,7 +386,7 @@ public class CarServiceImpl implements CarService {
       ali mislim da kad je snimimo resizovanu trebace mu manje
 
       Predlog je naravno da resizujemo na neku velicinu pri snimanju i recimo da ogranicimo broj slika koje oglas moze da ima na tipa 3
-
+    */
     public static BufferedImage resize(BufferedImage img, int newW, int newH) {
         java.awt.Image tmp = img.getScaledInstance(newW, newH, java.awt.Image.SCALE_SMOOTH);
         BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
@@ -396,5 +397,5 @@ public class CarServiceImpl implements CarService {
 
         return dimg;
     }
-     */
+
 }

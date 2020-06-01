@@ -102,9 +102,11 @@ insert into fuel_type (name, removed) value ('Electric', false);
 insert into car (children_seats, rate ,mileage, car_model_id, car_class_id, fuel_type_id, transmission_type_id, has_android_app, owner_id) value (1, 3.5, 5000, 1,1,1,2, true, 3);
 insert into car (children_seats, rate ,mileage, car_model_id, car_class_id, fuel_type_id, transmission_type_id, has_android_app, owner_id) value (0, 3.8, 2000, 2, 2,1,3, false, 3);
 insert into car (children_seats, rate ,mileage, car_model_id, car_class_id, fuel_type_id, transmission_type_id, has_android_app, owner_id) value (2, 4, 10000, 3, 5,2,2, true, 3);
+insert into car (children_seats, rate ,mileage, car_model_id, car_class_id, fuel_type_id, transmission_type_id, has_android_app, owner_id) value (1, 0, 12000, 7, 1, 5, 2, false, 2);
+insert into car (children_seats, rate ,mileage, car_model_id, car_class_id, fuel_type_id, transmission_type_id, has_android_app, owner_id) value (2, 0, 30000, 35, 1, 3, 2, false, 2);
+insert into car (children_seats, rate ,mileage, car_model_id, car_class_id, fuel_type_id, transmission_type_id, has_android_app, owner_id) value (0, 0, 50000, 52, 5, 2, 1, false, 2);
 
-insert into car (car_class_id, car_model_id, transmission_type_id, fuel_type_id, children_seats, rate, mileage, has_android_app, owner_id)
-value (1, 1, 3, 2, 1, 3.5, 5000, true, 2);
+--insert into car (car_class_id, car_model_id, transmission_type_id, fuel_type_id, children_seats, rate, mileage, has_android_app, owner_id)value (1, 1, 3, 2, 1, 3.5, 5000, true, 2);
 
 insert into comment(content, date_time, from_comment, car_id, reply_content, comment_status, reply_status) value ('This car is the best', '2020-04-04', 3, 1, null, 'APPROVED' , 'NOT_POSTED');
 insert into comment(content, date_time, from_comment, car_id, reply_content, comment_status, reply_status) value ('This car is the worst', '2020-04-04', 3, 1, 'I am sorry that you feel this way', 'APPROVED', 'APPROVED');
@@ -116,9 +118,13 @@ insert into comment(content, date_time, from_comment, car_id, reply_content, com
 insert into comment(content, date_time, from_comment, car_id, reply_content, comment_status, reply_status) value ('This car is the best', '2020-04-05', 4, 1, null, 'POSTED' , 'NOT_POSTED');
 insert into comment(content, date_time, from_comment, car_id, reply_content, comment_status, reply_status) value ('This car is the worst', '2020-04-05', 4, 1, 'I am sorry that you feel this way', 'APPROVED' , 'POSTED');
 
-insert into image (path, car_id) value ('/carPictures/1.png',1);
-insert into image (path, car_id) value ('/carPictures/2_0.png',2);
-insert into image (path, car_id) value ('/carPictures/2_1.png',2);
-insert into image (path, car_id) value ('/carPictures/2_2.png',2);
-insert into image (path, car_id) value ('/carPictures/3_0.png',3);
-insert into image (path, car_id) value ('/carPictures/3_1.png',3);
+insert into image (path, car_id) value ('/carPicturesMain/1_0.png',1);
+insert into image (path, car_id) value ('/carPicturesMain/1_1.png',1);
+insert into image (path, car_id) value ('/carPicturesMain/2_0.png',2);
+insert into image (path, car_id) value ('/carPicturesMain/2_1.png',2);
+insert into image (path, car_id) value ('/carPicturesMain/2_2.png',2);
+insert into image (path, car_id) value ('/carPicturesMain/3_1.png',3);
+insert into image (path, car_id) value ('/carPicturesMain/3_2.png',3);
+insert into image (path, car_id) value ('/carPicturesMain/4_0.png',4);
+insert into image (path, car_id) value ('/carPicturesMain/5_0.png',5);
+insert into image (path, car_id) value ('/carPicturesMain/6_0.png',6);
