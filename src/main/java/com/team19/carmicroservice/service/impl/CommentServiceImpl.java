@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -133,12 +134,82 @@ public class CommentServiceImpl implements CommentService {
 
         if(comment != null)
         {
-            comment.setReplyContent(reply.getReplyContent());
-            comment.setReplyStatus(ReplyStatus.POSTED);
+            if (comment.getCommentStatus().equals(CommentStatus.APPROVED)) {
+                comment.setReplyContent(reply.getReplyContent());
+                comment.setReplyStatus(ReplyStatus.POSTED);
+                commentRepository.save(comment);
+                return true;
+            }
+            else return false;
+        }
+        else return false;
+    }
+
+    @Override
+    public ArrayList<CommentDTO> getAllPostedComments() {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomPrincipal cp = (CustomPrincipal) auth.getPrincipal();
+
+        ArrayList<Comment> comments = commentRepository.findAllPosetdComments();
+        ArrayList<CommentDTO> commentDTOS = new ArrayList<>();
+
+        for (Comment c : comments) {
+            commentDTOS.add(new CommentDTO(c));
+        }
+
+        ArrayList<CommentDTO> returnedComments = userClient.getCommentCreator(commentDTOS, cp.getPermissions(), cp.getUserID(), cp.getToken());
+        return returnedComments;
+
+    }
+
+    @Override
+    public List<Comment> getAllPostedReplies() {
+        return commentRepository.findAllPostedReplies();
+    }
+
+    @Override
+    public boolean approveComment(Long id) {
+        Comment comment = commentRepository.getOne(id);
+        if (comment != null && comment.getCommentStatus().equals(CommentStatus.POSTED)) {
+            comment.setCommentStatus(CommentStatus.APPROVED);
             commentRepository.save(comment);
             return true;
         }
-        else return false;
+        return false;
+    }
+
+    @Override
+    public boolean rejectComment(Long id) {
+        Comment comment = commentRepository.getOne(id);
+        if (comment != null && comment.getCommentStatus().equals(CommentStatus.POSTED)) {
+            comment.setCommentStatus(CommentStatus.REJECTED);
+            commentRepository.save(comment);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean approveReply(Long id) {
+        Comment comment = commentRepository.getOne(id);
+        if (comment != null && comment.getReplyStatus().equals(ReplyStatus.POSTED)) {
+            comment.setReplyStatus(ReplyStatus.APPROVED);
+            commentRepository.save(comment);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean rejectReply(Long id) {
+        Comment comment = commentRepository.getOne(id);
+        if (comment != null && comment.getReplyStatus().equals(ReplyStatus.POSTED)) {
+            comment.setReplyStatus(ReplyStatus.REJECTED);
+            commentRepository.save(comment);
+            return true;
+        }
+        return false;
     }
 
 
