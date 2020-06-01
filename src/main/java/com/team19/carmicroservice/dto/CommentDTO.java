@@ -1,5 +1,7 @@
 package com.team19.carmicroservice.dto;
 
+import com.team19.carmicroservice.model.Comment;
+
 import java.time.LocalDateTime;
 
 public class CommentDTO {
@@ -26,9 +28,25 @@ public class CommentDTO {
 
     private Long carId;
 
-    public CommentDTO()
-    {
+    private String brand;
 
+    private String model;
+
+    public CommentDTO() {
+
+    }
+
+    public CommentDTO(Comment comment) {
+        this.id = comment.getId();
+        this.fromComment = comment.getFromComment();
+        this.content = comment.getContent();
+        this.dateTime = comment.getDateTime();
+        this.replyContent = comment.getReplyContent();
+        this.commentStatus = comment.getCommentStatus().toString();
+        this.replyStatus = comment.getReplyStatus().toString();
+        this.carId = comment.getCar().getId();
+        this.brand = comment.getCar().getCarModel().getCarBrand().getName();
+        this.model = comment.getCar().getCarModel().getName();
     }
 
     public Long getId() {
@@ -117,5 +135,21 @@ public class CommentDTO {
 
     public void setReplyStatus(String replyStatus) {
         this.replyStatus = replyStatus;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
     }
 }
