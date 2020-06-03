@@ -227,7 +227,7 @@ public class CarServiceImpl implements CarService {
                     e.printStackTrace();
                 }
 
-                String folder = "/carPicturesMain/";
+                String folder = "./carPicturesMain/";
 
                 Path directoryPath = Paths.get(folder);
                 File directory = directoryPath.toFile();
