@@ -12,6 +12,5 @@ import java.util.ArrayList;
 public interface UserClient {
 
     @PostMapping(value="user/getCommentCreator", produces = "application/json")
-    ArrayList<CommentDTO> getCommentCreator(@RequestBody ArrayList<CommentDTO> comments, @RequestHeader("permissions") String permissions,
-                                            @RequestHeader("userID") String userId, @RequestHeader("Authorization") String token);
+    ArrayList<CommentDTO> getCommentCreator(@RequestBody ArrayList<CommentDTO> comments);
 }

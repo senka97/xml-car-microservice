@@ -42,11 +42,8 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public ArrayList<CommentDTO> getCommentsForCar(Long id) {
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        CustomPrincipal cp = (CustomPrincipal) auth.getPrincipal();
-
         //dobavljanje ad-a iz ad-service zbog carId
-        AdDTOSimple ad = this.adClient.getAdSimple(id,cp.getPermissions(), cp.getUserID(), cp.getToken());
+        AdDTOSimple ad = this.adClient.getAdSimple(id);
 
         Car car = carService.getCarById(ad.getCarId());
 
@@ -84,7 +81,7 @@ public class CommentServiceImpl implements CommentService {
 
             }
             // komentari odlaze u user-service da se popuni ime i prezime korisnika koji je ostavio komentar
-            ArrayList<CommentDTO> returnedComments = userClient.getCommentCreator(newComments,cp.getPermissions(), cp.getUserID(), cp.getToken());
+            ArrayList<CommentDTO> returnedComments = userClient.getCommentCreator(newComments);
 
             return returnedComments;
         }
@@ -98,7 +95,7 @@ public class CommentServiceImpl implements CommentService {
         CustomPrincipal cp = (CustomPrincipal) auth.getPrincipal();
 
         //dobavljanje ad-a iz ad-service zbog carId
-        AdDTOSimple ad = this.adClient.getAdSimple(comment.getAdId(),cp.getPermissions(), cp.getUserID(), cp.getToken());
+        AdDTOSimple ad = this.adClient.getAdSimple(comment.getAdId());
 
         if(ad != null)
         {
@@ -158,7 +155,7 @@ public class CommentServiceImpl implements CommentService {
             commentDTOS.add(new CommentDTO(c));
         }
 
-        ArrayList<CommentDTO> returnedComments = userClient.getCommentCreator(commentDTOS, cp.getPermissions(), cp.getUserID(), cp.getToken());
+        ArrayList<CommentDTO> returnedComments = userClient.getCommentCreator(commentDTOS);
         return returnedComments;
 
     }
