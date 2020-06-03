@@ -115,8 +115,8 @@ insert into comment(content, date_time, from_comment, car_id, reply_content, com
 insert into comment(content, date_time, from_comment, car_id, reply_content, comment_status, reply_status) value ('This car is the best', '2020-04-04', 3, 2, null, 'APPROVED', 'NOT_POSTED');
 insert into comment(content, date_time, from_comment, car_id, reply_content, comment_status, reply_status) value ('This car is the worst', '2020-04-04', 3, 2, 'I am sorry that you feel this way', 'APPROVED', 'APPROVED');
 
-insert into comment(content, date_time, from_comment, car_id, reply_content, comment_status, reply_status) value ('This car is the best', '2020-04-05', 4, 1, null, 'POSTED' , 'NOT_POSTED');
-insert into comment(content, date_time, from_comment, car_id, reply_content, comment_status, reply_status) value ('This car is the worst', '2020-04-05', 4, 1, 'I am sorry that you feel this way', 'APPROVED' , 'POSTED');
+insert into comment(content, date_time, from_comment, car_id, reply_content, comment_status, reply_status) value ('This car is the best', '2020-04-05', 5, 1, null, 'POSTED' , 'NOT_POSTED');
+insert into comment(content, date_time, from_comment, car_id, reply_content, comment_status, reply_status) value ('This car is the worst', '2020-04-05', 5, 1, 'I am sorry that you feel this way', 'APPROVED' , 'POSTED');
 
 insert into image (path, car_id) value ('./carPicturesMain/1_0.png',1);
 insert into image (path, car_id) value ('./carPicturesMain/1_1.png',1);

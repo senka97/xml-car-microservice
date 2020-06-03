@@ -212,5 +212,36 @@ public class CommentServiceImpl implements CommentService {
         return false;
     }
 
+    @Override
+    public void hideCommentRequestsForBlockedAndRemovedClient(Long id) {
+        //proveravam zahteve za komentare koje je ostavio korisnik pre, a koji sada treba da se obrise ili blokira
+        ArrayList<Comment> allClientComments = commentRepository.findAllByFromComment(id);
+        if (!allClientComments.isEmpty()) {
+            for (Comment c : allClientComments) {
+                if (c.getCommentStatus().equals(CommentStatus.POSTED) && c.getReplyStatus().equals(ReplyStatus.NOT_POSTED)) {
+                    c.setCommentStatus(CommentStatus.REJECTED);
+                }
+                if (c.getReplyStatus().equals(ReplyStatus.POSTED)) {
+                    c.setReplyStatus(ReplyStatus.REJECTED);
+                }
+                commentRepository.save(c);
+            }
+        }
+
+        //proveravam zahteve za komentare za oglase(tacnije automobile) koji pripadaju korisniku,a koji sada treba da se obrise ili blokira
+        ArrayList<Comment> allCommentsOnClientCars = commentRepository.findAllByCar_OwnerId(id);
+        if (!allCommentsOnClientCars.isEmpty()) {
+            for (Comment c : allCommentsOnClientCars) {
+                if (c.getCommentStatus().equals(CommentStatus.POSTED) && c.getReplyStatus().equals(ReplyStatus.NOT_POSTED)) {
+                    c.setCommentStatus(CommentStatus.REJECTED);
+                }
+                if (c.getReplyStatus().equals(ReplyStatus.POSTED)) {
+                    c.setReplyStatus(ReplyStatus.REJECTED);
+                }
+                commentRepository.save(c);
+            }
+        }
+
+    }
 
 }
