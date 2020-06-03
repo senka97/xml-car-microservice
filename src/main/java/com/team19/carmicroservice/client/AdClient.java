@@ -11,9 +11,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 @FeignClient(name = "ad-service")
 public interface AdClient {
 
-    @GetMapping(value="api/getAd/{id}", produces = "application/json")
-    AdDTOSimple getAdSimple(@PathVariable("id") Long id,@RequestHeader("permissions") String permissions,
-                            @RequestHeader("userID") String userId, @RequestHeader("Authorization") String token);
+    @GetMapping(value="/api/getAd/{id}", produces = "application/json")
+    AdDTOSimple getAdSimple(@PathVariable("id") Long id);
 
     @GetMapping("/api/ad/car/{car_id}/active")
     AdDTO checkIfCarHasActiveAds(@PathVariable("car_id") Long id, @RequestHeader("permissions") String permissions,
