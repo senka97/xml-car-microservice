@@ -19,4 +19,5 @@ public interface CommentService {
     boolean rejectComment(Long id);
     boolean approveReply(Long id);
     boolean rejectReply(Long id);
+    void hideCommentRequestsForBlockedAndRemovedClient(Long id);
 }

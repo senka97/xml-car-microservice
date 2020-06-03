@@ -122,4 +122,11 @@ public class CommentController {
 
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+
+    @PutMapping(value = "/comments/client/{id}")
+    public ResponseEntity<?> hideCommentRequestForBLockedAndRemovedClient(@PathVariable Long id) {
+        commentService.hideCommentRequestsForBlockedAndRemovedClient(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+
+    }
 }

@@ -17,4 +17,7 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     @Query(value = "SELECT * FROM comment  WHERE reply_status = 'POSTED'", nativeQuery = true)
     List<Comment> findAllPostedReplies();
+
+    ArrayList<Comment> findAllByFromComment(Long id);
+    ArrayList<Comment> findAllByCar_OwnerId(Long id);
 }
