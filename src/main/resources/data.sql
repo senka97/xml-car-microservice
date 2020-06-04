@@ -122,6 +122,9 @@ insert into comment(content, date_time, from_comment, car_id, reply_content, com
 insert into comment(content, date_time, from_comment, car_id, reply_content, comment_status, reply_status) value ('This car is the best', '2020-04-05', 5, 4, null, 'POSTED' , 'NOT_POSTED');
 insert into comment(content, date_time, from_comment, car_id, reply_content, comment_status, reply_status) value ('This car is the worst', '2020-04-05', 5, 4, 'I am sorry that you feel this way', 'APPROVED' , 'POSTED');
 
+insert into comment(content, date_time, from_comment, car_id, reply_content, comment_status, reply_status) value ('I like this car', '2020-06-03', 7, 4, null, 'POSTED' , 'NOT_POSTED');
+insert into comment(content, date_time, from_comment, car_id, reply_content, comment_status, reply_status) value ('All recommendations for this car', '2020-04-05', 8, 4, 'Thank you for putting your trust in us', 'APPROVED' , 'POSTED');
+
 insert into image (path, car_id) value ('./carPicturesMain/1_0.png',1);
 insert into image (path, car_id) value ('./carPicturesMain/1_1.png',1);
 insert into image (path, car_id) value ('./carPicturesMain/2_0.png',2);

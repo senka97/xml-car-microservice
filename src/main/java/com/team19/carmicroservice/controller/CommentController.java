@@ -124,6 +124,7 @@ public class CommentController {
     }
 
     @PutMapping(value = "/comments/client/{id}")
+    @PreAuthorize("hasAuthority('comment_update')")
     public ResponseEntity<?> hideCommentRequestForBLockedAndRemovedClient(@PathVariable Long id) {
         commentService.hideCommentRequestsForBlockedAndRemovedClient(id);
         return new ResponseEntity<>(HttpStatus.OK);
