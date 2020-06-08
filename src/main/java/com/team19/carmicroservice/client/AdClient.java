@@ -18,8 +18,8 @@ public interface AdClient {
     AdDTO checkIfCarHasActiveAds(@PathVariable("car_id") Long id, @RequestHeader("permissions") String permissions,
                  @RequestHeader("userID") String userId, @RequestHeader("Authorization") String token);
 
-    @PutMapping(value = "api/changeCanPostComment/{adId}/{userId}")
-    Boolean changeUserComment(@PathVariable("adId") Long adId, @PathVariable("userId") Long uId ,@RequestHeader("permissions") String permissions,
+    @PutMapping(value = "api/userCanPostComment/{carId}/{userId}")
+    Boolean changeUserComment(@PathVariable("carId") Long carId, @PathVariable("userId") Long uId ,@RequestHeader("permissions") String permissions,
                               @RequestHeader("userID") String userId, @RequestHeader("Authorization") String token);
 
 }
