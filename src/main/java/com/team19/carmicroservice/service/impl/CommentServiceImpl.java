@@ -111,8 +111,8 @@ public class CommentServiceImpl implements CommentService {
                 com.setReplyContent(null);
                 com.setReplyStatus(ReplyStatus.NOT_POSTED);
 
-                //promenim da korisnik vise ne moze komentarisati ovaj oglas
-                if(this.adClient.changeUserComment(ad.getId(),comment.getFromComment(),cp.getPermissions(), cp.getUserID(), cp.getToken()))
+                //zapamtim da je korisnik iskoristio mogucnost komentarisanja kola
+                if(this.adClient.changeUserComment(car.getId(),comment.getFromComment(),cp.getPermissions(), cp.getUserID(), cp.getToken()))
                 {
                     commentRepository.save(com);
                     return true;
