@@ -79,7 +79,7 @@ public class CommentController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PutMapping(value = "/comments/approve/{id}")
+    @PutMapping(value = "/comments/{id}/approve")
     @PreAuthorize("hasAuthority('comment_update')")
     public ResponseEntity<?> approveComment(@PathVariable Long id) {
 
@@ -90,7 +90,7 @@ public class CommentController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    @PutMapping(value = "/comments/reject/{id}")
+    @PutMapping(value = "/comments/{id}/reject")
     @PreAuthorize("hasAuthority('comment_update')")
     public ResponseEntity<?>  rejectComment(@PathVariable Long id) {
 
@@ -101,7 +101,7 @@ public class CommentController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    @PutMapping(value = "/replies/approve/{id}")
+    @PutMapping(value = "/replies/{id}/approve")
     @PreAuthorize("hasAuthority('reply_update')")
     public ResponseEntity<?> approveReply(@PathVariable Long id) {
 
@@ -112,7 +112,7 @@ public class CommentController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    @PutMapping(value = "/replies/reject/{id}")
+    @PutMapping(value = "/replies/{id}/reject")
     @PreAuthorize("hasAuthority('reply_update')")
     public ResponseEntity<?> rejectReply(@PathVariable Long id) {
 

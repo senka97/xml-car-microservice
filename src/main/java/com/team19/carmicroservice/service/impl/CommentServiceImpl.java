@@ -145,9 +145,6 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public ArrayList<CommentDTO> getAllPostedComments() {
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        CustomPrincipal cp = (CustomPrincipal) auth.getPrincipal();
-
         ArrayList<Comment> comments = commentRepository.findAllPosetdComments();
         ArrayList<CommentDTO> commentDTOS = new ArrayList<>();
 
