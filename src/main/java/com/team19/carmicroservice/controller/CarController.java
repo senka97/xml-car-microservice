@@ -5,6 +5,9 @@ import com.team19.carmicroservice.dto.CarDTO;
 import com.team19.carmicroservice.dto.ExistingCarDTO;
 import com.team19.carmicroservice.service.impl.CarServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 
@@ -54,5 +57,15 @@ public class CarController {
         System.out.println(mileage);
         System.out.println(childrenSeats);
         return this.carService.searchCars(brand,model,feulType,classType,transType,mileage,childrenSeats);
+    }
+
+    @PutMapping(value="/car/user/{userId}/ad/{adId}/{rate}")
+    @PreAuthorize("hasAuthority('rate_update')")
+    public ResponseEntity<?> rating(@PathVariable Long userId, @PathVariable Long adId, @PathVariable double rate) {
+        if (carService.rating(userId, adId, rate)) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }
