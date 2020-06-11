@@ -375,6 +375,35 @@ public class CarServiceImpl implements CarService {
         return carDTOS;
     }
 
+    @Override
+    public boolean rating(Long userId, Long adId, double rate) {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomPrincipal cp = (CustomPrincipal) auth.getPrincipal();
+
+        AdDTOSimple ad = adClient.getAdSimple(adId);
+        if (ad != null) {
+            Car car = carRepository.getOne(ad.getCarId());
+
+            if (car != null) {
+                double newRate = (car.getRate() + rate) / 2;
+                car.setRate(newRate);
+
+                //promeniti da je korisnik ocenio auto
+                if (adClient.changeUserCanRate(userId, car.getId(), cp.getPermissions(), cp.getUserID(), cp.getToken())) {
+                    carRepository.save(car);
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
     /*
 
       TODO Pogledati

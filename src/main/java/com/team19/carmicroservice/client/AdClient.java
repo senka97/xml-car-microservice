@@ -22,4 +22,8 @@ public interface AdClient {
     Boolean changeUserComment(@PathVariable("carId") Long carId, @PathVariable("userId") Long uId ,@RequestHeader("permissions") String permissions,
                               @RequestHeader("userID") String userId, @RequestHeader("Authorization") String token);
 
+    @PutMapping(value = "rating/user/{userId}/car/{carId}")
+    boolean changeUserCanRate(@PathVariable("userId") Long userId, @PathVariable("carId") Long carId, @RequestHeader("permissions") String permissions,
+                              @RequestHeader("userID") String userID, @RequestHeader("Authorization") String token);
+
 }
