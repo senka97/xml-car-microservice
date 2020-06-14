@@ -1,5 +1,6 @@
 package com.team19.carmicroservice.service.impl;
 
+import com.rent_a_car.car_service.soap.CommentSOAP;
 import com.team19.carmicroservice.client.AdClient;
 import com.team19.carmicroservice.client.UserClient;
 import com.team19.carmicroservice.dto.AdDTOSimple;
@@ -78,7 +79,6 @@ public class CommentServiceImpl implements CommentService {
                     newComments.add(newC);
                 }
 
-
             }
             // komentari odlaze u user-service da se popuni ime i prezime korisnika koji je ostavio komentar
             ArrayList<CommentDTO> returnedComments = userClient.getCommentCreator(newComments);
@@ -86,6 +86,32 @@ public class CommentServiceImpl implements CommentService {
             return returnedComments;
         }
         else return null;
+    }
+
+    @Override
+    public ArrayList<CommentSOAP> getCommentsForCarSOAP(Long id) {
+
+        ArrayList<CommentDTO> commentDTOS = this.getCommentsForCar(id);
+        ArrayList<CommentSOAP> returnedComments = new ArrayList<>();
+
+        for(CommentDTO c : commentDTOS)
+        {
+            CommentSOAP newC = new CommentSOAP();
+
+            newC.setId(c.getId());
+            newC.setFromComment(c.getFromComment());
+            newC.setUserName(c.getUserName());
+            newC.setUserLastname(c.getUserLastname());
+            newC.setContent(c.getContent());
+            newC.setReplyContent(c.getReplyContent());
+            newC.setIsReplied(c.getIsReplied());
+
+            newC.setCarId(c.getCarId());
+
+            returnedComments.add(newC);
+        }
+
+        return returnedComments;
     }
 
     @Override

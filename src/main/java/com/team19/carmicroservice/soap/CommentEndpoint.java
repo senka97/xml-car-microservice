@@ -1,0 +1,37 @@
+package com.team19.carmicroservice.soap;
+
+import com.rent_a_car.car_service.soap.CommentSOAP;
+import com.rent_a_car.car_service.soap.CommentsRequest;
+import com.rent_a_car.car_service.soap.CommentsResponse;
+import com.team19.carmicroservice.service.impl.CommentServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ws.server.endpoint.annotation.Endpoint;
+import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
+import org.springframework.ws.server.endpoint.annotation.RequestPayload;
+import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
+
+import java.util.ArrayList;
+
+@Endpoint
+public class CommentEndpoint {
+
+    @Autowired
+    private CommentServiceImpl commentService;
+
+    private static final String NAMESPACE_URI = "http://www.rent-a-car.com/car-service/soap";
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "CommentsRequest")
+    @ResponsePayload
+    public CommentsResponse getComments(@RequestPayload CommentsRequest request) {
+
+        CommentsResponse response = new CommentsResponse();
+        ArrayList<CommentSOAP> commentArrayList = commentService.getCommentsForCarSOAP(request.getId());
+
+        for(CommentSOAP comm : commentArrayList)
+        {
+            response.getCommentSOAP().add(comm);
+        }
+
+        return response;
+    }
+}

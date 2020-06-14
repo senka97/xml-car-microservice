@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.rent-a-car.com/car-service/soap"
+           targetNamespace="http://www.rent-a-car.com/car-service/soap" elementFormDefault="qualified"
+>
+
+    <xs:element name="commentSOAP">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+                <xs:element name="fromComment" type="xs:long"/>
+                <xs:element name="userName" type="xs:string"/>
+                <xs:element name="userLastname" type="xs:string"/>
+                <xs:element name="content" type="xs:string"/>
+                <!--<xs:element name="dateTime" type="xs:dateTime" />-->
+                <xs:element name="replyContent" type="xs:string"/>
+                <xs:element name="isReplied" type="xs:boolean"/>
+                <!--<xs:element name="commentStatus" type="xs:string"/>
+                    <xs:element name="replyStatus" type="xs:string"/> -->
+                <xs:element name="carId" type="xs:long"/>
+                <!--<xs:element name="car" type="car:car"/>-->
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="CommentsRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="CommentsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="commentSOAP" maxOccurs="unbounded" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
+   <!-- <xs:simpleType name="commentStatusSOAP">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="POSTED"/>
+            <xs:enumeration value="REJECTED"/>
+            <xs:enumeration value="APPROVED"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="replyStatusSOAP">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="NOT_POSTED"/>
+            <xs:enumeration value="POSTED"/>
+            <xs:enumeration value="REJECTED"/>
+            <xs:enumeration value="APPROVED"/>
+        </xs:restriction>
+    </xs:simpleType>-->
+
+</xs:schema>
