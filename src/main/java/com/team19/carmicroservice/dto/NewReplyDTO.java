@@ -9,6 +9,11 @@ public class NewReplyDTO {
 
     }
 
+    public NewReplyDTO(String replyContent)
+    {
+        this.replyContent = replyContent;
+    }
+
     public String getReplyContent() {
         return replyContent;
     }

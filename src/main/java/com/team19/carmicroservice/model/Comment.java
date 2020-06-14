@@ -26,7 +26,7 @@ public class Comment {
     private String replyContent;
 
     @Enumerated(EnumType.STRING)
-    private CommentStatus commentStatus;
+    private CommentStatus commentStatus = CommentStatus.POSTED;
 
     @Enumerated(EnumType.STRING)
     private ReplyStatus replyStatus = ReplyStatus.NOT_POSTED;
