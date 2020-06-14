@@ -101,7 +101,7 @@
                 </executions>
                 <configuration>
                     <sources>
-                        <source>${project.basedir}/src/main/resources/commentSOAP.xsd</source>
+                        <source>${project.basedir}/src/main/resources/comment.xsd</source>
                     </sources>
                 </configuration>
             </plugin>

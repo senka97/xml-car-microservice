@@ -1,8 +1,7 @@
 package com.team19.carmicroservice.soap;
 
-import com.rent_a_car.car_service.soap.CommentSOAP;
-import com.rent_a_car.car_service.soap.CommentsRequest;
-import com.rent_a_car.car_service.soap.CommentsResponse;
+import com.rent_a_car.car_service.soap.*;
+import com.team19.carmicroservice.dto.NewReplyDTO;
 import com.team19.carmicroservice.service.impl.CommentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
@@ -31,6 +30,19 @@ public class CommentEndpoint {
         {
             response.getCommentSOAP().add(comm);
         }
+
+        return response;
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "SendReplyRequest")
+    @ResponsePayload
+    public SendReplyResponse sendReply(@RequestPayload SendReplyRequest request) {
+
+        SendReplyResponse response = new SendReplyResponse();
+
+        NewReplyDTO dto = new NewReplyDTO(request.getReplyContent());
+
+        response.setFlag(this.commentService.replyComment(request.getCommentId(), dto));
 
         return response;
     }
