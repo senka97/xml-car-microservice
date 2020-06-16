@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.rent-a-car.com/car-service/soap"
+           targetNamespace="http://www.rent-a-car.com/car-service/soap" elementFormDefault="qualified"
+>
+    <xs:element name="carSOAP">
+        <xs:complexType>
+            <xs:sequence>
+				<xs:element type="xs:long" name="id"/>
+				<xs:element type="xs:int" name="childrenSeats"/>
+				<xs:element type="xs:double" name="rate"/>
+				<xs:element type="xs:double" name="mileage"/>
+				<xs:element type="xs:boolean" name="hasAndroidApp"/>
+				<xs:element type="xs:string" name="carBrand"/>
+				<xs:element type="xs:string" name="carModel"/>
+				<xs:element type="xs:string" name="carClass"/>
+				<xs:element type="xs:string" name="transType"/>
+				<xs:element type="xs:string" name="feulType"/>
+				<xs:element type="xs:string" name="photos64" maxOccurs="unbounded" minOccurs="0"/>
+				<xs:element name="numberOfComments" type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetCarWithMostCommentsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="carSOAP"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetCarWithMostCommentsRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetCarWithBestRateResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="carSOAP"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetCarWithBestRateRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetCarWithMostKilometersResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="carSOAP"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetCarWithMostKilometersRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

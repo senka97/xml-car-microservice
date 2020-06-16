@@ -404,6 +404,59 @@ public class CarServiceImpl implements CarService {
         }
     }
 
+    @Override
+    public CarStatisticDTO getCarWithMostComments() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomPrincipal cp = (CustomPrincipal) auth.getPrincipal();
+        List<Car> cars = carRepository.findAllByOwnerId(Long.parseLong(cp.getUserID()));
+        Car mostComments = cars.get(0);
+        System.out.println("Pocetak");
+        for(Car car: cars){
+            if(car.getComments() != null) {
+
+                if (mostComments == null)
+                    mostComments = car;
+
+                if (mostComments.getComments().size() < car.getComments().size())
+                    mostComments = car;
+            }
+        }
+        System.out.println("Kraj");
+        CarStatisticDTO carStatisticDTO = new CarStatisticDTO(mostComments);
+        carStatisticDTO.setNumberOfComments(mostComments.getComments().size());
+        return carStatisticDTO;
+    }
+
+
+    @Override
+    public CarStatisticDTO getCarWithMostKilometers() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomPrincipal cp = (CustomPrincipal) auth.getPrincipal();
+        List<Car> cars = carRepository.findAllByOwnerId(Long.parseLong(cp.getUserID()));
+        Car mostKilometers = cars.get(0);
+        for(Car car: cars){
+            if(mostKilometers.getMileage() < car.getMileage())
+                mostKilometers=car;
+        }
+        CarStatisticDTO carStatisticDTO = new CarStatisticDTO(mostKilometers);
+        carStatisticDTO.setNumberOfComments(mostKilometers.getComments().size());
+        return carStatisticDTO;
+    }
+
+    @Override
+    public CarStatisticDTO getCarWithBestScore() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomPrincipal cp = (CustomPrincipal) auth.getPrincipal();
+        List<Car> cars = carRepository.findAllByOwnerId(Long.parseLong(cp.getUserID()));
+        Car bestScore = cars.get(0);
+        for(Car car: cars){
+            if(bestScore.getRate() < car.getRate())
+                bestScore=car;
+        }
+        CarStatisticDTO carStatisticDTO = new CarStatisticDTO(bestScore);
+        carStatisticDTO.setNumberOfComments(bestScore.getComments().size());
+        return carStatisticDTO;
+    }
     /*
 
       TODO Pogledati
