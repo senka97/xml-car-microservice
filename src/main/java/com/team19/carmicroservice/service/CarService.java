@@ -2,6 +2,7 @@ package com.team19.carmicroservice.service;
 
 import com.team19.carmicroservice.dto.AdDTO;
 import com.team19.carmicroservice.dto.CarDTO;
+import com.team19.carmicroservice.dto.CarStatisticDTO;
 import com.team19.carmicroservice.model.Car;
 import com.team19.carmicroservice.dto.ExistingCarDTO;
 
@@ -17,4 +18,8 @@ public interface CarService {
     ArrayList<ExistingCarDTO> getCarsWithNoActiveAds();
     ArrayList<CarDTO> searchCars(String brand,String model,String feulType,String classType,String transType, int mileage,int childrenSeats);
     boolean rating(Long userId, Long adId, double rate);
+    CarStatisticDTO getCarWithMostComments();
+    CarStatisticDTO getCarWithMostKilometers();
+    CarStatisticDTO getCarWithBestScore();
+
 }
