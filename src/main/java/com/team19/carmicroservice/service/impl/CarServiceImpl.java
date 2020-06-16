@@ -430,24 +430,32 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public CarStatisticDTO getCarWithMostKilometers() {
-        List<Car> cars = carRepository.findAll();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomPrincipal cp = (CustomPrincipal) auth.getPrincipal();
+        List<Car> cars = carRepository.findAllByOwnerId(Long.parseLong(cp.getUserID()));
         Car mostKilometers = cars.get(0);
         for(Car car: cars){
             if(mostKilometers.getMileage() < car.getMileage())
                 mostKilometers=car;
         }
-        return new CarStatisticDTO(mostKilometers);
+        CarStatisticDTO carStatisticDTO = new CarStatisticDTO(mostKilometers);
+        carStatisticDTO.setNumberOfComments(mostKilometers.getComments().size());
+        return carStatisticDTO;
     }
 
     @Override
     public CarStatisticDTO getCarWithBestScore() {
-        List<Car> cars = carRepository.findAll();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomPrincipal cp = (CustomPrincipal) auth.getPrincipal();
+        List<Car> cars = carRepository.findAllByOwnerId(Long.parseLong(cp.getUserID()));
         Car bestScore = cars.get(0);
         for(Car car: cars){
             if(bestScore.getRate() < car.getRate())
                 bestScore=car;
         }
-        return new CarStatisticDTO(bestScore);
+        CarStatisticDTO carStatisticDTO = new CarStatisticDTO(bestScore);
+        carStatisticDTO.setNumberOfComments(bestScore.getComments().size());
+        return carStatisticDTO;
     }
     /*
 

@@ -21,7 +21,15 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="MostCommentsRequest">
+    <xs:element name="GetCarWithMostCommentsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="carSOAP"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetCarWithMostCommentsRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="id" type="xs:long"/>
@@ -29,11 +37,36 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="MostCommentsResponse">
+    <xs:element name="GetCarWithBestRateResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element ref="carSOAP"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
+
+    <xs:element name="GetCarWithBestRateRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetCarWithMostKilometersResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="carSOAP"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetCarWithMostKilometersRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
 </xs:schema>

@@ -24,13 +24,79 @@ public class StatisticEndpoint {
     private static final String NAMESPACE_URI = "http://www.rent-a-car.com/car-service/soap";
 
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "MostCommentsRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetCarWithMostCommentsRequest")
     @ResponsePayload
     @Transactional
-    public MostCommentsResponse getCarWithMostComments(@RequestPayload MostCommentsRequest request) {
+    public GetCarWithMostCommentsResponse getCarWithMostComments(@RequestPayload GetCarWithMostCommentsRequest request) {
         System.out.println("Most Comments");
-        MostCommentsResponse response = new MostCommentsResponse();
+        GetCarWithMostCommentsResponse response = new GetCarWithMostCommentsResponse();
         CarStatisticDTO carStatisticDTO = carService.getCarWithMostComments();
+
+        CarSOAP carSOAP = new CarSOAP();
+
+        carSOAP.setCarBrand(carStatisticDTO.getCarBrand());
+        carSOAP.setCarClass(carStatisticDTO.getCarClass());
+        carSOAP.setCarModel(carStatisticDTO.getCarModel());
+        carSOAP.setChildrenSeats(carStatisticDTO.getChildrenSeats());
+        carSOAP.setFeulType(carStatisticDTO.getFuelType());
+        carSOAP.setHasAndroidApp(carStatisticDTO.isHasAndroidApp());
+        carSOAP.setMileage(carStatisticDTO.getMileage());
+        carSOAP.setId(carStatisticDTO.getId());
+        carSOAP.setNumberOfComments(carStatisticDTO.getNumberOfComments());
+        carSOAP.setRate(carStatisticDTO.getRate());
+        carSOAP.setTransType(carStatisticDTO.getTransType());
+
+
+        for(String img: carStatisticDTO.getPhotos64()){
+            carSOAP.getPhotos64().add(img);
+        }
+
+        response.setCarSOAP(carSOAP);
+
+        System.out.println(carStatisticDTO.getCarModel());
+        return response;
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetCarWithMostKilometersRequest")
+    @ResponsePayload
+    @Transactional
+    public GetCarWithMostKilometersResponse getCarWithMostComments(@RequestPayload GetCarWithMostKilometersRequest request) {
+        System.out.println("Most kilometers");
+        GetCarWithMostKilometersResponse response = new GetCarWithMostKilometersResponse();
+        CarStatisticDTO carStatisticDTO = carService.getCarWithMostKilometers();
+
+        CarSOAP carSOAP = new CarSOAP();
+
+        carSOAP.setCarBrand(carStatisticDTO.getCarBrand());
+        carSOAP.setCarClass(carStatisticDTO.getCarClass());
+        carSOAP.setCarModel(carStatisticDTO.getCarModel());
+        carSOAP.setChildrenSeats(carStatisticDTO.getChildrenSeats());
+        carSOAP.setFeulType(carStatisticDTO.getFuelType());
+        carSOAP.setHasAndroidApp(carStatisticDTO.isHasAndroidApp());
+        carSOAP.setMileage(carStatisticDTO.getMileage());
+        carSOAP.setId(carStatisticDTO.getId());
+        carSOAP.setNumberOfComments(carStatisticDTO.getNumberOfComments());
+        carSOAP.setRate(carStatisticDTO.getRate());
+        carSOAP.setTransType(carStatisticDTO.getTransType());
+
+
+        for(String img: carStatisticDTO.getPhotos64()){
+            carSOAP.getPhotos64().add(img);
+        }
+
+        response.setCarSOAP(carSOAP);
+
+        System.out.println(carStatisticDTO.getCarModel());
+        return response;
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetCarWithBestRateRequest")
+    @ResponsePayload
+    @Transactional
+    public GetCarWithBestRateResponse getCarWithMostComments(@RequestPayload GetCarWithBestRateRequest request) {
+        System.out.println("Best Rate");
+        GetCarWithBestRateResponse response = new GetCarWithBestRateResponse();
+        CarStatisticDTO carStatisticDTO = carService.getCarWithBestScore();
 
         CarSOAP carSOAP = new CarSOAP();
 
