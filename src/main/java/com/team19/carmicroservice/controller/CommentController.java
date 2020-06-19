@@ -130,4 +130,9 @@ public class CommentController {
         return new ResponseEntity<>(HttpStatus.OK);
 
     }
+
+    @GetMapping(value = "/comments/client/{id}")
+    public List<CommentDTO> findAllRejectedComments(@PathVariable Long id) {
+        return commentService.getAllRejectedComments(id);
+    }
 }
