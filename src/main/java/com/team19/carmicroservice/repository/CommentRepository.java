@@ -20,4 +20,7 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     ArrayList<Comment> findAllByFromComment(Long id);
     ArrayList<Comment> findAllByCar_OwnerId(Long id);
+
+    @Query(value = "SELECT * FROM comment  WHERE comment_status = 'REJECTED' AND from_comment= ?1", nativeQuery = true)
+    List<Comment> findAllRejectedComments(Long id);
 }

@@ -264,4 +264,15 @@ public class CommentServiceImpl implements CommentService {
 
     }
 
+    @Override
+    public List<CommentDTO> getAllRejectedComments(Long clientId) {
+        List<Comment> comments = commentRepository.findAllRejectedComments(clientId);
+        List<CommentDTO> commentDTOS = new ArrayList<>();
+
+        for (Comment c : comments) {
+            commentDTOS.add(new CommentDTO(c));
+        }
+        return commentDTOS;
+    }
+
 }

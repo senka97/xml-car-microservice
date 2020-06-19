@@ -22,4 +22,5 @@ public interface CommentService {
     boolean approveReply(Long id);
     boolean rejectReply(Long id);
     void hideCommentRequestsForBlockedAndRemovedClient(Long id);
+    List<CommentDTO> getAllRejectedComments(Long clientId);
 }
