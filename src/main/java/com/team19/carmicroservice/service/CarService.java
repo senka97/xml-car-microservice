@@ -21,5 +21,6 @@ public interface CarService {
     CarStatisticDTO getCarWithMostComments();
     CarStatisticDTO getCarWithMostKilometers();
     CarStatisticDTO getCarWithBestScore();
+    Boolean changeCarMileageAfterReport(Long carId, double mileage);
 
 }

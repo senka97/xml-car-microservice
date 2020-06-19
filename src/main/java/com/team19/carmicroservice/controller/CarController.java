@@ -68,4 +68,11 @@ public class CarController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
+    @PutMapping(value="/car/{id}/mileage")
+    @PreAuthorize("hasAuthority('car_update')")
+    public Boolean changeCarMileageAfterReport(@PathVariable("id") Long carId, @RequestBody double mileage)
+    {
+        return this.carService.changeCarMileageAfterReport(carId, mileage);
+    }
 }
