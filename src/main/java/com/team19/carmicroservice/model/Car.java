@@ -44,8 +44,6 @@ public class Car {
     @OneToMany(mappedBy = "car", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Comment> comments;
 
-    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<Report> reports;
 
     public Car() {
     }
@@ -63,7 +61,6 @@ public class Car {
         this.hasAndroidApp = hasAndroidApp;
         this.images = new HashSet<>();
         this.comments = new HashSet<>();
-        this.reports = new HashSet<>();
     }
 
     public Long getId() {
@@ -152,14 +149,6 @@ public class Car {
 
     public void setComments(Set<Comment> comments) {
         this.comments = comments;
-    }
-
-    public Set<Report> getReports() {
-        return reports;
-    }
-
-    public void setReports(Set<Report> reports) {
-        this.reports = reports;
     }
 
     public boolean isHasAndroidApp() {
