@@ -2,6 +2,7 @@ package com.team19.carmicroservice.controller;
 
 import com.team19.carmicroservice.dto.AdDTO;
 import com.team19.carmicroservice.dto.CarDTO;
+import com.team19.carmicroservice.dto.CarStatisticDTO;
 import com.team19.carmicroservice.dto.ExistingCarDTO;
 import com.team19.carmicroservice.service.impl.CarServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,7 @@ public class CarController {
     }
 
     @PostMapping(value = "/car",consumes = "application/json")
+    @PreAuthorize("hasAuthority('car_create')")
     public CarDTO addCar(@RequestBody CarDTO carDTO)
     {
         return this.carService.addNewCar(carDTO);
@@ -68,7 +70,24 @@ public class CarController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+    @GetMapping(value="/car/user/mostKilometers", produces = "application/json")
+    @PreAuthorize("hasAuthority('car_read')")
+    public CarStatisticDTO getCarWithMostKilometers()  {
+        return carService.getCarWithMostKilometers();
+    }
 
+    @GetMapping(value="/car/user/bestScore", produces = "application/json")
+    @PreAuthorize("hasAuthority('car_read')")
+    public CarStatisticDTO getCarWithBestScore()  {
+        return carService.getCarWithBestScore();
+    }
+
+    @GetMapping(value="/car/user/mostComments", produces = "application/json")
+    @PreAuthorize("hasAuthority('car_read')")
+    public CarStatisticDTO getCarWithMostComments() {
+        return carService.getCarWithMostComments();
+    }
+  
     @PutMapping(value="/car/{id}/mileage")
     @PreAuthorize("hasAuthority('car_update')")
     public Boolean changeCarMileageAfterReport(@PathVariable("id") Long carId, @RequestBody double mileage)
