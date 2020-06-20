@@ -32,7 +32,7 @@ public class CarController {
     }
 
     @PostMapping(value = "/car",consumes = "application/json")
-    @PreAuthorize("hasAuthority('car_write')")
+    @PreAuthorize("hasAuthority('car_create')")
     public CarDTO addCar(@RequestBody CarDTO carDTO)
     {
         return this.carService.addNewCar(carDTO);
