@@ -70,7 +70,6 @@ public class CarController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-
     @GetMapping(value="/car/user/mostKilometers", produces = "application/json")
     @PreAuthorize("hasAuthority('car_read')")
     public CarStatisticDTO getCarWithMostKilometers()  {
@@ -87,5 +86,12 @@ public class CarController {
     @PreAuthorize("hasAuthority('car_read')")
     public CarStatisticDTO getCarWithMostComments() {
         return carService.getCarWithMostComments();
+    }
+  
+    @PutMapping(value="/car/{id}/mileage")
+    @PreAuthorize("hasAuthority('car_update')")
+    public Boolean changeCarMileageAfterReport(@PathVariable("id") Long carId, @RequestBody double mileage)
+    {
+        return this.carService.changeCarMileageAfterReport(carId, mileage);
     }
 }

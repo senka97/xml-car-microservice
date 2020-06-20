@@ -457,18 +457,34 @@ public class CarServiceImpl implements CarService {
         carStatisticDTO.setNumberOfComments(bestScore.getComments().size());
         return carStatisticDTO;
     }
+
+    @Override
+    public Boolean changeCarMileageAfterReport(Long carId, double mileage) {
+
+        Car car = this.carRepository.findById(carId).orElse(null);
+
+        if( car != null )
+        {
+            car.setMileage(car.getMileage() + mileage);
+
+            this.carRepository.save(car);
+            return true;
+        }
+        else return false;
+    }
+
     /*
 
-      TODO Pogledati
+          TODO Pogledati
 
-      Neka funkcija da pomogne oko encodovanja slike
-      Ako je ne resizujem npr treba mu 80 milisekundi da je encoduje
-      A recimo ako je resizujem na 500*500 treba mu 12 milisekundi
-      Druga stvar za koju mu treba puno je citanje slike treba mu oko 80 milisekunidi (snimljena je u punoj velicini)
-      ali mislim da kad je snimimo resizovanu trebace mu manje
+          Neka funkcija da pomogne oko encodovanja slike
+          Ako je ne resizujem npr treba mu 80 milisekundi da je encoduje
+          A recimo ako je resizujem na 500*500 treba mu 12 milisekundi
+          Druga stvar za koju mu treba puno je citanje slike treba mu oko 80 milisekunidi (snimljena je u punoj velicini)
+          ali mislim da kad je snimimo resizovanu trebace mu manje
 
-      Predlog je naravno da resizujemo na neku velicinu pri snimanju i recimo da ogranicimo broj slika koje oglas moze da ima na tipa 3
-    */
+          Predlog je naravno da resizujemo na neku velicinu pri snimanju i recimo da ogranicimo broj slika koje oglas moze da ima na tipa 3
+        */
     public static BufferedImage resize(BufferedImage img, int newW, int newH) {
         java.awt.Image tmp = img.getScaledInstance(newW, newH, java.awt.Image.SCALE_SMOOTH);
         BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
