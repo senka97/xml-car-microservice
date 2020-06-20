@@ -256,7 +256,7 @@ public class CarServiceImpl implements CarService {
             }
         }
         carDTO.setId(newCar.getId());
-        System.out.println("****************DODAT***************");
+        System.out.println("****************DODAT*****************");
         return carDTO;
     }
 
