@@ -36,7 +36,7 @@ public class FuelTypeController {
     }
 
     @PostMapping(consumes = "application/json")
-    @PreAuthorize("hasAuthority('addFuelType')")
+    @PreAuthorize("hasAuthority('fuel_type_create')")
     public ResponseEntity<FuelTypeDTO> addFuelType(@RequestBody FuelTypeDTO fuelTypeDTO) {
         FuelType fuelType = fuelTypeService.addFuelType(fuelTypeDTO);
 
@@ -48,7 +48,7 @@ public class FuelTypeController {
     }
 
     @DeleteMapping(value = "/{id}")
-    @PreAuthorize("hasAuthority('removeFuelType')")
+    @PreAuthorize("hasAuthority('fuel_type_delete')")
     public ResponseEntity<?> removeFuelType(@PathVariable Long id) {
 
         if (fuelTypeService.removeFuelType(id)) {

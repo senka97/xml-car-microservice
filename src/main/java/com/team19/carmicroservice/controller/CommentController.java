@@ -55,7 +55,7 @@ public class CommentController {
     }
 
     @GetMapping(value = "/comments")
-    @PreAuthorize("hasAuthority('allComments')")
+    @PreAuthorize("hasAuthority('comment_read')")
     public ResponseEntity<?> getAllPostedComments() {
         ArrayList<CommentDTO> comments = commentService.getAllPostedComments();
         if (!comments.isEmpty()) {
@@ -65,7 +65,7 @@ public class CommentController {
     }
 
     @GetMapping(value = "/replies")
-    @PreAuthorize("hasAuthority('allReplies')")
+    @PreAuthorize("hasAuthority('comment_read')")
     public ResponseEntity<?> getAllPostedReplies() {
         List<Comment> comments = commentService.getAllPostedReplies();
         List<CommentDTO> commentDTOS = new ArrayList<>();
@@ -102,7 +102,7 @@ public class CommentController {
     }
 
     @PutMapping(value = "/replies/{id}/approve")
-    @PreAuthorize("hasAuthority('reply_update')")
+    @PreAuthorize("hasAuthority('comment_update')")
     public ResponseEntity<?> approveReply(@PathVariable Long id) {
 
         if(commentService.approveReply(id)) {
@@ -113,7 +113,7 @@ public class CommentController {
     }
 
     @PutMapping(value = "/replies/{id}/reject")
-    @PreAuthorize("hasAuthority('reply_update')")
+    @PreAuthorize("hasAuthority('comment_update')")
     public ResponseEntity<?> rejectReply(@PathVariable Long id) {
 
         if(commentService.rejectReply(id)) {

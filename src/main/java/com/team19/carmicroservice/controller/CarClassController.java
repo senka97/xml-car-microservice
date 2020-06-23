@@ -36,7 +36,7 @@ public class CarClassController {
     }
 
     @PostMapping(consumes = "application/json")
-    @PreAuthorize("hasAuthority('addCarClass')")
+    @PreAuthorize("hasAuthority('car_class_create')")
     public ResponseEntity<CarClassDTO> addCarClass(@RequestBody CarClassDTO carClassDTO) {
         CarClass carClass = carClassService.addCarClass(carClassDTO);
 
@@ -48,7 +48,7 @@ public class CarClassController {
     }
 
     @DeleteMapping(value = "/{id}")
-    @PreAuthorize("hasAuthority('removeCarClass')")
+    @PreAuthorize("hasAuthority('car_class_delete')")
     public ResponseEntity<?> removeCarClass(@PathVariable Long id) {
 
         if (carClassService.removeCarClass(id)) {

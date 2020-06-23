@@ -34,7 +34,7 @@ public class CarModelController {
     }
 
     @PostMapping(value = "/brand/{id}")
-    @PreAuthorize("hasAuthority('addCarModel')")
+    @PreAuthorize("hasAuthority('car_model_create')")
     public ResponseEntity<CarModelDTO> addCarModel(@RequestBody CarModelDTO carModelDTO, @PathVariable Long id) {
         CarModel carModel = carModelService.addCarModel(carModelDTO, id);
 
@@ -46,7 +46,7 @@ public class CarModelController {
     }
 
     @DeleteMapping(value = "/{id}")
-    @PreAuthorize("hasAuthority('removeCarModel')")
+    @PreAuthorize("hasAuthority('car_model_delete')")
     public ResponseEntity<?> removeCarModel(@PathVariable Long id) {
 
         if (carModelService.removeCarModel(id)) {
