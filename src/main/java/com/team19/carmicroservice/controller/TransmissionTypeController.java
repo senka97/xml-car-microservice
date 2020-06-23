@@ -36,7 +36,7 @@ public class TransmissionTypeController {
     }
 
     @PostMapping(consumes = "application/json")
-    @PreAuthorize("hasAuthority('addTransmissionType')")
+    @PreAuthorize("hasAuthority('transmission_type_create')")
     public ResponseEntity<TransmissionTypeDTO> addTransmissionType(@RequestBody TransmissionTypeDTO transmissionTypeDTO) {
         TransmissionType transmissionType = transmissionTypeService.addTransmissiontype(transmissionTypeDTO);
 
@@ -48,7 +48,7 @@ public class TransmissionTypeController {
     }
 
     @DeleteMapping(value = "/{id}")
-    @PreAuthorize("hasAuthority('removeTransmissionType')")
+    @PreAuthorize("hasAuthority('transmission_type_delete')")
     public ResponseEntity<?> removeTransmissionType(@PathVariable Long id) {
 
         if (transmissionTypeService.removeTransmissionType(id)) {
