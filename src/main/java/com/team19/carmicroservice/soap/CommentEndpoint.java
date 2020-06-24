@@ -26,12 +26,15 @@ public class CommentEndpoint {
         CommentsResponse response = new CommentsResponse();
         ArrayList<CommentSOAP> commentArrayList = commentService.getCommentsForCarSOAP(request.getId());
 
-        for(CommentSOAP comm : commentArrayList)
+        if( commentArrayList != null)
         {
-            response.getCommentSOAP().add(comm);
+            for(CommentSOAP comm : commentArrayList)
+            {
+                response.getCommentSOAP().add(comm);
+            }
         }
-
         return response;
+
     }
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "SendReplyRequest")
