@@ -6,8 +6,12 @@ import com.team19.carmicroservice.model.TransmissionType;
 import com.team19.carmicroservice.repository.CarRepository;
 import com.team19.carmicroservice.repository.TransmissionTypeRepository;
 import com.team19.carmicroservice.service.TransmissionTypeService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.text.MessageFormat;
 import java.util.List;
 
 @Service
@@ -18,6 +22,8 @@ public class TransmissionTypeServiceImpl implements TransmissionTypeService {
 
     @Autowired
     private CarRepository carRepository;
+
+    Logger logger = LoggerFactory.getLogger(TransmissionTypeServiceImpl.class);
 
     @Override
     public List<TransmissionType> getAllTransmissionTypes() {
@@ -53,6 +59,8 @@ public class TransmissionTypeServiceImpl implements TransmissionTypeService {
 
     @Override
     public TransmissionType findByName(String name) {
-        return transmissionTypeRepository.findByName(name);
+        TransmissionType transmissionType = transmissionTypeRepository.findByName(name);
+        logger.info(MessageFormat.format("TT-ID:{0}-FBN;", transmissionType.getId()));//TT TransmissionType, FBN Find By Name
+        return transmissionType;
     }
 }
