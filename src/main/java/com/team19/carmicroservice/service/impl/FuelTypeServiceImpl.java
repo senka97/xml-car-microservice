@@ -6,9 +6,12 @@ import com.team19.carmicroservice.model.FuelType;
 import com.team19.carmicroservice.repository.CarRepository;
 import com.team19.carmicroservice.repository.FuelTypeRepository;
 import com.team19.carmicroservice.service.FuelTypeService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 @Service
@@ -19,6 +22,8 @@ public class FuelTypeServiceImpl implements FuelTypeService {
 
     @Autowired
     private CarRepository carRepository;
+
+    Logger logger = LoggerFactory.getLogger(FuelTypeServiceImpl.class);
 
     @Override
     public List<FuelType> getAllFuelTypes() {
@@ -54,7 +59,9 @@ public class FuelTypeServiceImpl implements FuelTypeService {
 
     @Override
     public FuelType findByName(String name) {
-        return fuelTypeRepository.findByName(name);
+        FuelType fuelType = fuelTypeRepository.findByName(name);
+        logger.info(MessageFormat.format("FT-ID:{0}-FBN;", fuelType.getId()));//FT Fuel Type, FBN Find By Name
+        return fuelType;
     }
 
 }

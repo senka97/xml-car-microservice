@@ -8,9 +8,12 @@ import com.team19.carmicroservice.model.CarClass;
 import com.team19.carmicroservice.repository.CarClassRepository;
 import com.team19.carmicroservice.repository.CarRepository;
 import com.team19.carmicroservice.service.CarClassService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 @Service
@@ -26,6 +29,8 @@ public class CarClassServiceImpl implements CarClassService {
     public List<CarClass> getAllCarClasses() {
         return carClassRepository.findAll();
     }
+
+    Logger logger = LoggerFactory.getLogger(CarClassServiceImpl.class);
 
     @Override
     public CarClass addCarClass(CarClassDTO carClassDTO) {
@@ -56,6 +61,8 @@ public class CarClassServiceImpl implements CarClassService {
 
     @Override
     public CarClass findByName(String name) {
-        return carClassRepository.findByName(name);
+        CarClass carClass = carClassRepository.findByName(name);
+        logger.info(MessageFormat.format("CC-ID:{0}-FBN;", carClass.getId()));//CC Car Class FBN Find By Name
+        return carClass;
     }
 }

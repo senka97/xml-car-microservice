@@ -4,12 +4,20 @@ import com.team19.carmicroservice.dto.AdDTO;
 import com.team19.carmicroservice.dto.CarDTO;
 import com.team19.carmicroservice.dto.CarStatisticDTO;
 import com.team19.carmicroservice.dto.ExistingCarDTO;
+import com.team19.carmicroservice.model.Car;
+import com.team19.carmicroservice.security.CustomPrincipal;
 import com.team19.carmicroservice.service.impl.CarServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import java.text.MessageFormat;
 import java.util.ArrayList;
 
 @RestController
@@ -18,6 +26,8 @@ public class CarController {
 
     @Autowired
     private CarServiceImpl carService;
+
+    Logger logger = LoggerFactory.getLogger(CarController.class);
 
     @GetMapping(value="/cars/{id}", produces = "application/json")
     public CarDTO getCar(@PathVariable("id") Long carId)
@@ -35,12 +45,18 @@ public class CarController {
     @PreAuthorize("hasAuthority('car_create')")
     public CarDTO addCar(@RequestBody CarDTO carDTO)
     {
-        return this.carService.addNewCar(carDTO);
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomPrincipal cp = (CustomPrincipal) auth.getPrincipal();
+        CarDTO car = this.carService.addNewCar(carDTO);
+        logger.info(MessageFormat.format("Car-ID:{0}-added;UserID:{1}", car.getId(), cp.getUserID()));
+        return car;
     }
 
     @GetMapping(value="/car/ad/notActive")
     public ArrayList<ExistingCarDTO> getCarsWithNoActiveAds()
     {
+        logger.info("Car-NAA read");//NAA -NO ACTIVE ADS
         return this.carService.getCarsWithNoActiveAds();
     }
 
@@ -58,6 +74,9 @@ public class CarController {
         System.out.println(transType);
         System.out.println(mileage);
         System.out.println(childrenSeats);
+
+
+        logger.info("Car-extended search;");
         return this.carService.searchCars(brand,model,feulType,classType,transType,mileage,childrenSeats);
     }
 

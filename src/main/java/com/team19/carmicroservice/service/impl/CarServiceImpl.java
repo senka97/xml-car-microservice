@@ -10,6 +10,8 @@ import com.team19.carmicroservice.model.Image;
 import com.team19.carmicroservice.repository.CarRepository;
 import com.team19.carmicroservice.security.CustomPrincipal;
 import com.team19.carmicroservice.service.CarService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,6 +27,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -57,6 +60,8 @@ public class CarServiceImpl implements CarService {
 
     @Autowired
     private AdClient adClient;
+
+    Logger logger = LoggerFactory.getLogger(CarServiceImpl.class);
 
     @Override
     public CarDTO getCar(Long id) {
@@ -212,6 +217,8 @@ public class CarServiceImpl implements CarService {
                 BufferedImage image = null;
                 byte[] imageByte;
 
+                String folder = "./carPicturesMain/";
+                String imageName =  car.getId() + "_" + i + ".png";
 
                 Base64Decoder decoder = new Base64Decoder();
                 imageByte = Base64.getDecoder().decode(imageString);
@@ -219,15 +226,16 @@ public class CarServiceImpl implements CarService {
                 try {
                     image = ImageIO.read(bis);
                 } catch (IOException e) {
+                    logger.error(MessageFormat.format("NP-failed: IMR;UserID:{0}", cp.getUserID()));//NP - new photo , IMR - Image read
                     e.printStackTrace();
                 }
                 try {
                     bis.close();
                 } catch (IOException e) {
+                    logger.error(MessageFormat.format("NP-failed: ISC;UserID:{0}", cp.getUserID()));//NP - new photo , ISC- Inputstream closing
                     e.printStackTrace();
                 }
 
-                String folder = "./carPicturesMain/";
 
                 Path directoryPath = Paths.get(folder);
                 File directory = directoryPath.toFile();
@@ -242,6 +250,7 @@ public class CarServiceImpl implements CarService {
                     image = resize(image,800,550);
                     ImageIO.write(image, "png", outputfile);
                 } catch (IOException e) {
+                    logger.error(MessageFormat.format("P-Name:{0}-failed: resize;UserID:{1}", imageName, cp.getUserID()));
                     e.printStackTrace();
                 }
 
@@ -275,7 +284,10 @@ public class CarServiceImpl implements CarService {
             return carDTOS;
         }
         for(Car car: cars){
+            logger.debug("AS-call-S:CAA"); //ad service call start CAA - check if car has active ads
             AdDTO adDTO= adClient.checkIfCarHasActiveAds(car.getId(),cp.getPermissions(),cp.getUserID(),cp.getToken());
+            logger.debug("AS-call-E:CAA"); //ad service call end CAA - check if car has active ads
+
             if(adDTO == null){
                 ExistingCarDTO carDTO = new ExistingCarDTO();
                 carDTO.setId(car.getId());
@@ -300,6 +312,7 @@ public class CarServiceImpl implements CarService {
                         try {
                             img = ImageIO.read(input);
                         } catch (IOException e) {
+                            logger.error(MessageFormat.format("P-ID:{0}-read failed;UserID:{1}",p.getId(), cp.getUserID()));
                             e.printStackTrace();
                         }
                         if(img != null) {
@@ -311,11 +324,15 @@ public class CarServiceImpl implements CarService {
                                 String imageString = Base64.getEncoder().encodeToString(imageBytes);
                                 String retStr = "data:image/png;base64," + imageString;
                                 carDTO.getPhotos64().add(retStr);
+
                                 bos.close();
                             } catch (IOException e) {
+                                logger.error(MessageFormat.format("P-ID:{0}-bas64 conversion failed;UserID:{1}",p.getId(), cp.getUserID()));
                                 e.printStackTrace();
                             }
                         }
+
+                       // logger.info(MessageFormat.format("P-ID:{0}-read;UserID:{1}",p.getId(), cp.getUserID()));
                     }
                 }
 
@@ -424,6 +441,7 @@ public class CarServiceImpl implements CarService {
         System.out.println("Kraj");
         CarStatisticDTO carStatisticDTO = new CarStatisticDTO(mostComments);
         carStatisticDTO.setNumberOfComments(mostComments.getComments().size());
+        logger.info(MessageFormat.format("Car-ID:{0}-most comments read;UserID:{1}", carStatisticDTO.getId(), cp.getUserID()));
         return carStatisticDTO;
     }
 
@@ -440,6 +458,7 @@ public class CarServiceImpl implements CarService {
         }
         CarStatisticDTO carStatisticDTO = new CarStatisticDTO(mostKilometers);
         carStatisticDTO.setNumberOfComments(mostKilometers.getComments().size());
+        logger.info(MessageFormat.format("Car-ID:{0}-most kilometers read;UserID:{1}", carStatisticDTO.getId(), cp.getUserID()));
         return carStatisticDTO;
     }
 
@@ -455,6 +474,7 @@ public class CarServiceImpl implements CarService {
         }
         CarStatisticDTO carStatisticDTO = new CarStatisticDTO(bestScore);
         carStatisticDTO.setNumberOfComments(bestScore.getComments().size());
+        logger.info(MessageFormat.format("Car-ID:{0}-best score read;UserID:{1}", carStatisticDTO.getId(), cp.getUserID()));
         return carStatisticDTO;
     }
 
