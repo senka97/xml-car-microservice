@@ -83,9 +83,14 @@ public class CarController {
     @PutMapping(value="/car/user/{userId}/ad/{adId}/{rate}")
     @PreAuthorize("hasAuthority('rate_update')")
     public ResponseEntity<?> rating(@PathVariable Long userId, @PathVariable Long adId, @PathVariable double rate) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomPrincipal cp = (CustomPrincipal) auth.getPrincipal();
+
         if (carService.rating(userId, adId, rate)) {
+            logger.info(MessageFormat.format("Rate:{0}-updated;AdID:{1};UserID:{2}", rate, adId, cp.getUserID()));
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
+            logger.info(MessageFormat.format("Rate:{0}-failed;AdID:{1};UserID:{2}", rate, adId, cp.getUserID()));
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
