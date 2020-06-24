@@ -6,6 +6,8 @@ import com.team19.carmicroservice.dto.NewReplyDTO;
 import com.team19.carmicroservice.model.Comment;
 import com.team19.carmicroservice.security.CustomPrincipal;
 import com.team19.carmicroservice.service.impl.CommentServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,8 +18,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.text.MessageFormat;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,33 +34,50 @@ public class CommentController {
 
     @GetMapping(value = "/comments/{id}")
     //@PreAuthorize("hasAuthority('comment_read')")   treba svi da mogu da citaju komentare
-    public ResponseEntity<?> getCommentsForCar(@PathVariable("id") Long adId)
-    {
-        return new ResponseEntity<>(commentService.getCommentsForCar(adId), HttpStatus.OK);
+    public ResponseEntity<?> getCommentsForCar(@PathVariable("id") Long adId) {
+
+        ArrayList<CommentDTO> comments = commentService.getCommentsForCar(adId);
+        if (comments != null)
+        {
+            return new ResponseEntity<>(comments, HttpStatus.OK);
+        }
+        else
+        {
+            return new ResponseEntity<>("Not found.", HttpStatus.BAD_REQUEST);
+        }
+
     }
 
     @PostMapping(value="/comments")
     @PreAuthorize("hasAuthority('comment_create')")
-    public ResponseEntity<?> createComment(@RequestBody NewCommentDTO comment)
+    public ResponseEntity<?> createComment(@Valid @RequestBody NewCommentDTO comment)
     {
         if(commentService.createComment(comment))
         {
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            logger.info("Creating comment - Comment for ad id: " + comment.getAdId() + " created");
+            return new ResponseEntity<>("Comment created",HttpStatus.CREATED);
         }
-        else
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        else{
+            logger.info("Creating comment - Comment for ad id: " + comment.getAdId() + " couldn't be created");
+            return new ResponseEntity<>("Error creating comment",HttpStatus.BAD_REQUEST);
+        }
 
     }
 
     @PutMapping(value="/comments/{id}")
     @PreAuthorize("hasAuthority('comment_update')")
-    public ResponseEntity<?> replyComment(@PathVariable("id") Long comId, @RequestBody NewReplyDTO reply)
+    public ResponseEntity<?> replyComment(@PathVariable("id") Long comId, @Valid @RequestBody NewReplyDTO reply)
     {
         if(commentService.replyComment(comId,reply))
         {
-            return new ResponseEntity<>(HttpStatus.OK);
-        }else
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            logger.info("Posting reply - Reply for comment id: " + comId + " created");
+            return new ResponseEntity<>("Reply created", HttpStatus.OK);
+        }
+        else
+        {
+            logger.info("Posting reply - Reply for comment id: " + comId + " couldn't be created");
+            return new ResponseEntity<>("Error creating reply", HttpStatus.BAD_REQUEST);
+        }
 
     }
 
