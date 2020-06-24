@@ -15,6 +15,8 @@ import com.team19.carmicroservice.repository.CommentRepository;
 import com.team19.carmicroservice.security.CustomPrincipal;
 import com.team19.carmicroservice.service.CarService;
 import com.team19.carmicroservice.service.CommentService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -39,6 +41,7 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private UserClient userClient;
 
+    Logger logger = LoggerFactory.getLogger(CommentServiceImpl.class);
 
     @Override
     public ArrayList<CommentDTO> getCommentsForCar(Long id) {
@@ -46,72 +49,94 @@ public class CommentServiceImpl implements CommentService {
         //dobavljanje ad-a iz ad-service zbog carId
         AdDTOSimple ad = this.adClient.getAdSimple(id);
 
-        Car car = carService.getCarById(ad.getCarId());
-
-        if(car != null)
+        if( ad != null )
         {
-            ArrayList<Comment> comments = commentRepository.findCommentsForCar(car.getId());
-            ArrayList<CommentDTO> newComments = new ArrayList<>();
-            for(Comment c : comments)
+            Car car = carService.getCarById(ad.getCarId());
+
+            if(car != null)
             {
-                if(c.getCommentStatus().equals(CommentStatus.APPROVED))
+                ArrayList<Comment> comments = commentRepository.findCommentsForCar(car.getId());
+                ArrayList<CommentDTO> newComments = new ArrayList<>();
+                for(Comment c : comments)
                 {
-                    CommentDTO newC = new CommentDTO();
-                    newC.setCarId(car.getId());
-                    newC.setId(c.getId());
-                    newC.setContent(c.getContent());
-                    newC.setDateTime(c.getDateTime());
-                    newC.setFromComment(c.getFromComment());
+                    if(c.getCommentStatus().equals(CommentStatus.APPROVED))
+                    {
+                        CommentDTO newC = new CommentDTO();
+                        newC.setCarId(car.getId());
+                        newC.setId(c.getId());
+                        newC.setContent(c.getContent());
+                        newC.setDateTime(c.getDateTime());
+                        newC.setFromComment(c.getFromComment());
 
-                    if(c.getReplyStatus().equals(ReplyStatus.APPROVED))
-                    {
-                        newC.setReplyContent(c.getReplyContent());
-                        newC.setIsReplied(true);
+                        if(c.getReplyStatus().equals(ReplyStatus.APPROVED))
+                        {
+                            newC.setReplyContent(c.getReplyContent());
+                            newC.setIsReplied(true);
+                        }
+                        else if(c.getReplyStatus().equals(ReplyStatus.POSTED))
+                        {
+                            newC.setReplyContent(null); // da se ne bi prikazao odgovor
+                            newC.setIsReplied(true); // ako je odgovor ceka odobravanje ne treba da kaci opet
+                        }
+                        else{ // ako nije odobren komentar, i ako je kacen pre i ako nije treba dozvoliti da se odgovori opet
+                            newC.setIsReplied(false);
+                        }
+                        newComments.add(newC);
                     }
-                    else if(c.getReplyStatus().equals(ReplyStatus.POSTED))
-                    {
-                        newC.setReplyContent(null); // da se ne bi prikazao odgovor
-                        newC.setIsReplied(true); // ako je odgovor ceka odobravanje ne treba da kaci opet
-                    }
-                    else{ // ako nije odobren komentar, i ako je kacen pre i ako nije treba dozvoliti da se odgovori opet
-                        newC.setIsReplied(false);
-                    }
-                    newComments.add(newC);
+
                 }
+                // komentari odlaze u user-service da se popuni ime i prezime korisnika koji je ostavio komentar
+                ArrayList<CommentDTO> returnedComments = userClient.getCommentCreator(newComments);
 
+                return returnedComments;
             }
-            // komentari odlaze u user-service da se popuni ime i prezime korisnika koji je ostavio komentar
-            ArrayList<CommentDTO> returnedComments = userClient.getCommentCreator(newComments);
-
-            return returnedComments;
+            else
+            {
+                logger.error("Getting comments - Car id: "+ ad.getCarId() + " not found");
+                return null;
+            }
         }
-        else return null;
+        else
+        {
+            logger.error("Getting comments - Ad id: "+ id + " not found");
+            return null;
+        }
+
     }
 
     @Override
     public ArrayList<CommentSOAP> getCommentsForCarSOAP(Long id) {
 
         ArrayList<CommentDTO> commentDTOS = this.getCommentsForCar(id);
-        ArrayList<CommentSOAP> returnedComments = new ArrayList<>();
 
-        for(CommentDTO c : commentDTOS)
+        if( commentDTOS != null )
         {
-            CommentSOAP newC = new CommentSOAP();
+            ArrayList<CommentSOAP> returnedComments = new ArrayList<>();
 
-            newC.setId(c.getId());
-            newC.setFromComment(c.getFromComment());
-            newC.setUserName(c.getUserName());
-            newC.setUserLastname(c.getUserLastname());
-            newC.setContent(c.getContent());
-            newC.setReplyContent(c.getReplyContent());
-            newC.setIsReplied(c.getIsReplied());
+            for(CommentDTO c : commentDTOS)
+            {
+                CommentSOAP newC = new CommentSOAP();
 
-            newC.setCarId(c.getCarId());
+                newC.setId(c.getId());
+                newC.setFromComment(c.getFromComment());
+                newC.setUserName(c.getUserName());
+                newC.setUserLastname(c.getUserLastname());
+                newC.setContent(c.getContent());
+                newC.setReplyContent(c.getReplyContent());
+                newC.setIsReplied(c.getIsReplied());
 
-            returnedComments.add(newC);
+                newC.setCarId(c.getCarId());
+
+                returnedComments.add(newC);
+            }
+
+            return returnedComments;
         }
-
-        return returnedComments;
+        else
+        {
+            logger.error("Getting comments for soap - not found");
+            return null;
+        }
     }
 
     @Override
@@ -143,11 +168,23 @@ public class CommentServiceImpl implements CommentService {
                     commentRepository.save(com);
                     return true;
                 }
-                else return false;
+                else
+                {
+                    logger.error("Creating comment - User id: " + comment.getFromComment() + " - couldn't post comment");
+                    return false;
+                }
             }
-            else return false;
+            else
+            {
+                logger.error("Creating comment - Car id: "+ ad.getCarId() + " not found");
+                return false;
+            }
         }
-        else return false;
+        else
+        {
+            logger.error("Creating comment - Ad id: "+ comment.getAdId() + " not found");
+            return false;
+        }
     }
 
     @Override
@@ -163,9 +200,17 @@ public class CommentServiceImpl implements CommentService {
                 commentRepository.save(comment);
                 return true;
             }
-            else return false;
+            else
+            {
+                logger.error("Creating reply - Comment id: "+ id + " not approved");
+                return false;
+            }
         }
-        else return false;
+        else
+        {
+            logger.error("Creating reply - Comment id: "+ id + " not found");
+            return false;
+        }
     }
 
     @Override

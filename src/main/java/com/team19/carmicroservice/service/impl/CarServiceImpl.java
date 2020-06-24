@@ -4,8 +4,6 @@ import com.mysql.cj.util.Base64Decoder;
 import com.team19.carmicroservice.client.AdClient;
 import com.team19.carmicroservice.dto.*;
 import com.team19.carmicroservice.model.Car;
-import com.team19.carmicroservice.model.CarClass;
-import com.team19.carmicroservice.model.CarModel;
 import com.team19.carmicroservice.model.Image;
 import com.team19.carmicroservice.repository.CarRepository;
 import com.team19.carmicroservice.security.CustomPrincipal;
@@ -39,10 +37,6 @@ public class CarServiceImpl implements CarService {
     @Autowired
     private CarRepository carRepository;
 
-    @Override
-    public Car getCarById(Long id) {
-        return carRepository.findById(id).orElse(null);
-    }
     @Autowired
     private CarModelServiceImpl carModelService;
 
@@ -62,6 +56,11 @@ public class CarServiceImpl implements CarService {
     private AdClient adClient;
 
     Logger logger = LoggerFactory.getLogger(CarServiceImpl.class);
+
+    @Override
+    public Car getCarById(Long id) {
+        return carRepository.findById(id).orElse(null);
+    }
 
     @Override
     public CarDTO getCar(Long id) {
@@ -486,11 +485,14 @@ public class CarServiceImpl implements CarService {
         if( car != null )
         {
             car.setMileage(car.getMileage() + mileage);
-
             this.carRepository.save(car);
+            logger.info("Changing mileage - for car id: " + car.getId() + " - changed");
             return true;
         }
-        else return false;
+        else {
+            logger.error("Changing mileage - for car id: " + car.getId() + " - car not found");
+            return false;
+        }
     }
 
     /*

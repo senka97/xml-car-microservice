@@ -11,6 +11,6 @@ import java.util.ArrayList;
 @FeignClient(name = "user-service")
 public interface UserClient {
 
-    @PostMapping(value="user/getCommentCreator", produces = "application/json")
+    @PostMapping(value="user/comment", produces = "application/json")
     ArrayList<CommentDTO> getCommentCreator(@RequestBody ArrayList<CommentDTO> comments);
 }
