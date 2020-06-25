@@ -22,6 +22,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.text.MessageFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -235,45 +236,57 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public boolean approveComment(Long id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomPrincipal cp = (CustomPrincipal) auth.getPrincipal();
         Comment comment = commentRepository.getOne(id);
         if (comment != null && comment.getCommentStatus().equals(CommentStatus.POSTED)) {
             comment.setCommentStatus(CommentStatus.APPROVED);
             commentRepository.save(comment);
             return true;
         }
+        logger.info(MessageFormat.format("COA-ID:{0}-not found;UserID:{1}", id, cp.getUserID())); //COA comment approve
         return false;
     }
 
     @Override
     public boolean rejectComment(Long id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomPrincipal cp = (CustomPrincipal) auth.getPrincipal();
         Comment comment = commentRepository.getOne(id);
         if (comment != null && comment.getCommentStatus().equals(CommentStatus.POSTED)) {
             comment.setCommentStatus(CommentStatus.REJECTED);
             commentRepository.save(comment);
             return true;
         }
+        logger.info(MessageFormat.format("COR-ID:{0}-not found;UserID:{1}", id, cp.getUserID())); //COR comment reject
         return false;
     }
 
     @Override
     public boolean approveReply(Long id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomPrincipal cp = (CustomPrincipal) auth.getPrincipal();
         Comment comment = commentRepository.getOne(id);
         if (comment != null && comment.getReplyStatus().equals(ReplyStatus.POSTED)) {
             comment.setReplyStatus(ReplyStatus.APPROVED);
             commentRepository.save(comment);
             return true;
         }
+        logger.info(MessageFormat.format("RPA-ID:{0}-not found;UserID:{1}", id, cp.getUserID())); //RPA reply approve
         return false;
     }
 
     @Override
     public boolean rejectReply(Long id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomPrincipal cp = (CustomPrincipal) auth.getPrincipal();
         Comment comment = commentRepository.getOne(id);
         if (comment != null && comment.getReplyStatus().equals(ReplyStatus.POSTED)) {
             comment.setReplyStatus(ReplyStatus.REJECTED);
             commentRepository.save(comment);
             return true;
         }
+        logger.info(MessageFormat.format("RPR-ID:{0}-not found;UserID:{1}", id, cp.getUserID())); //RPR reply reject
         return false;
     }
 

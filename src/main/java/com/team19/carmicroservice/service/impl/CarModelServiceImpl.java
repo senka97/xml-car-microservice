@@ -8,10 +8,13 @@ import com.team19.carmicroservice.model.CarModel;
 import com.team19.carmicroservice.repository.CarBrandRepository;
 import com.team19.carmicroservice.repository.CarModelRepository;
 import com.team19.carmicroservice.repository.CarRepository;
+import com.team19.carmicroservice.security.CustomPrincipal;
 import com.team19.carmicroservice.service.CarModelService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
@@ -33,6 +36,7 @@ public class CarModelServiceImpl implements CarModelService {
 
     @Override
     public List<CarModel> getAllCarModelsByIdCarBrand(Long idCarBrand) {
+        logger.info(MessageFormat.format("CarM-read;CarB-ID:{0}-FBCBI;", idCarBrand));//FBCBI Find By Car brand id
         return carModelRepository.findByCarBrand_Id(idCarBrand);
     }
 
@@ -45,18 +49,21 @@ public class CarModelServiceImpl implements CarModelService {
             carModel.setName(carModelDTO.getName());
             carModel.setCarBrand(carBrand);
             carModel.setRemoved(false);
+            carModelRepository.save(carModel);
         }
-
-        carModelRepository.save(carModel);
         return carModel;
     }
 
     @Override
     public boolean removeCarModel(Long id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomPrincipal cp = (CustomPrincipal) auth.getPrincipal();
+
         CarModel carModel = carModelRepository.getOne(id);
         List<Car> cars = carRepository.findAll();
         for (Car c : cars) {
             if (c.getCarModel().equals(carModel)) {
+                logger.warn(MessageFormat.format("CarM-ID:{0}-has relation to car;UserID:{1}", id, cp.getUserID()));
                 return false;
             }
         }

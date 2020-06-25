@@ -5,10 +5,13 @@ import com.team19.carmicroservice.model.Car;
 import com.team19.carmicroservice.model.TransmissionType;
 import com.team19.carmicroservice.repository.CarRepository;
 import com.team19.carmicroservice.repository.TransmissionTypeRepository;
+import com.team19.carmicroservice.security.CustomPrincipal;
 import com.team19.carmicroservice.service.TransmissionTypeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
@@ -37,18 +40,21 @@ public class TransmissionTypeServiceImpl implements TransmissionTypeService {
         if (transmissionType != null) {
             transmissionType.setName(transmissionTypeDTO.getName());
             transmissionType.setRemoved(false);
+            transmissionTypeRepository.save(transmissionType);
         }
-
-        transmissionTypeRepository.save(transmissionType);
         return transmissionType;
     }
 
     @Override
     public boolean removeTransmissionType(Long id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomPrincipal cp = (CustomPrincipal) auth.getPrincipal();
+
         TransmissionType transmissionType = transmissionTypeRepository.getOne(id);
         List<Car> cars = carRepository.findAll();
         for (Car c : cars) {
             if(c.getTransmissionType().equals(transmissionType)) {
+                logger.warn(MessageFormat.format("TT-ID:{0}-has relation to car;UserID:{1}", id, cp.getUserID()));
                 return false;
             }
         }

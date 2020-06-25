@@ -410,12 +410,15 @@ public class CarServiceImpl implements CarService {
                     carRepository.save(car);
                     return true;
                 } else {
+                    logger.warn(MessageFormat.format("Rating;AdID:{0};CarID:{1};UserID:{2}-can not rate", adId, ad.getCarId(), cp.getUserID()));
                     return false;
                 }
             } else {
+                logger.info(MessageFormat.format("Rating;AdID:{0};CarID:{1}-not found;UserID:{2}", rate, adId, ad.getCarId(), cp.getUserID()));
                 return false;
             }
         } else {
+            logger.info(MessageFormat.format("Rating;AdID:{0}-not found;CarID:{1};UserID:{2}", rate, adId, ad.getCarId(), cp.getUserID()));
             return false;
         }
     }

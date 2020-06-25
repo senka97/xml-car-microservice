@@ -7,10 +7,13 @@ import com.team19.carmicroservice.model.Car;
 import com.team19.carmicroservice.model.CarClass;
 import com.team19.carmicroservice.repository.CarClassRepository;
 import com.team19.carmicroservice.repository.CarRepository;
+import com.team19.carmicroservice.security.CustomPrincipal;
 import com.team19.carmicroservice.service.CarClassService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
@@ -39,18 +42,22 @@ public class CarClassServiceImpl implements CarClassService {
         if (carClass != null) {
             carClass.setName(carClassDTO.getName());
             carClass.setRemoved(false);
+            carClassRepository.save(carClass);
         }
 
-        carClassRepository.save(carClass);
         return carClass;
     }
 
     @Override
     public boolean removeCarClass(Long id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomPrincipal cp = (CustomPrincipal) auth.getPrincipal();
+
         CarClass carClass = carClassRepository.getOne(id);
         List<Car> cars = carRepository.findAll();
         for (Car c : cars) {
             if (c.getCarClass().equals(carClass)) {
+                logger.warn(MessageFormat.format("CarC-ID:{0}-has relation to car;UserID:{1}", id, cp.getUserID()));
                 return false;
             }
         }

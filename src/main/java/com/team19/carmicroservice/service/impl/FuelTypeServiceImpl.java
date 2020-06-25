@@ -5,10 +5,13 @@ import com.team19.carmicroservice.model.Car;
 import com.team19.carmicroservice.model.FuelType;
 import com.team19.carmicroservice.repository.CarRepository;
 import com.team19.carmicroservice.repository.FuelTypeRepository;
+import com.team19.carmicroservice.security.CustomPrincipal;
 import com.team19.carmicroservice.service.FuelTypeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
@@ -37,18 +40,21 @@ public class FuelTypeServiceImpl implements FuelTypeService {
         if (fuelType != null) {
             fuelType.setName(fuelTypeDTO.getName());
             fuelType.setRemoved(false);
+            fuelTypeRepository.save(fuelType);
         }
-
-        fuelTypeRepository.save(fuelType);
         return fuelType;
     }
 
     @Override
     public boolean removeFuelType(Long id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomPrincipal cp = (CustomPrincipal) auth.getPrincipal();
+
         FuelType fuelType = fuelTypeRepository.getOne(id);
         List<Car> cars = carRepository.findAll();
         for (Car c : cars) {
             if (c.getFuelType().equals(fuelType)) {
+                logger.warn(MessageFormat.format("FT-ID:{0}-has relation to car;UserID:{1}", id, cp.getUserID()));
                 return false;
             }
         }

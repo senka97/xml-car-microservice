@@ -70,7 +70,7 @@ public class CarBrandController {
             logger.info(MessageFormat.format("CarB-ID:{0}-deleted;UserID:{1}", id, cp.getUserID()));
             return new ResponseEntity<>(HttpStatus.OK);
         }
-        logger.warn(MessageFormat.format("CarB-ID:{0}-not found;UserID:{1}", id, cp.getUserID()));
+        logger.info(MessageFormat.format("CarB-ID:{0}-not deleted;UserID:{1}", id, cp.getUserID()));
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
