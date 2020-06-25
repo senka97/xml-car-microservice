@@ -16,8 +16,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.text.MessageFormat;
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -54,11 +52,11 @@ public class CommentController {
     {
         if(commentService.createComment(comment))
         {
-            logger.info("Creating comment - Comment for ad id: " + comment.getAdId() + " created");
+            logger.info("Creating comment-For adID: " + comment.getAdId() + " created");
             return new ResponseEntity<>("Comment created",HttpStatus.CREATED);
         }
         else{
-            logger.info("Creating comment - Comment for ad id: " + comment.getAdId() + " couldn't be created");
+            logger.info("Creating comment-For adID: " + comment.getAdId() + " couldn't be created");
             return new ResponseEntity<>("Error creating comment",HttpStatus.BAD_REQUEST);
         }
 
@@ -70,12 +68,12 @@ public class CommentController {
     {
         if(commentService.replyComment(comId,reply))
         {
-            logger.info("Posting reply - Reply for comment id: " + comId + " created");
+            logger.info("Posting reply-For commentID: " + comId + " created");
             return new ResponseEntity<>("Reply created", HttpStatus.OK);
         }
         else
         {
-            logger.info("Posting reply - Reply for comment id: " + comId + " couldn't be created");
+            logger.info("Posting reply-For commentID: " + comId + " couldn't be created");
             return new ResponseEntity<>("Error creating reply", HttpStatus.BAD_REQUEST);
         }
 

@@ -93,13 +93,13 @@ public class CommentServiceImpl implements CommentService {
             }
             else
             {
-                logger.error("Getting comments - Car id: "+ ad.getCarId() + " not found");
+                logger.error("Getting comments-CarID: "+ ad.getCarId() + " not found");
                 return null;
             }
         }
         else
         {
-            logger.error("Getting comments - Ad id: "+ id + " not found");
+            logger.error("Getting comments-AdID: "+ id + " not found");
             return null;
         }
 
@@ -135,7 +135,7 @@ public class CommentServiceImpl implements CommentService {
         }
         else
         {
-            logger.error("Getting comments for soap - not found");
+            logger.error("Getting comments for soap-not found");
             return null;
         }
     }
@@ -171,19 +171,19 @@ public class CommentServiceImpl implements CommentService {
                 }
                 else
                 {
-                    logger.error("Creating comment - User id: " + comment.getFromComment() + " - couldn't post comment");
+                    logger.error("Creating comment-UserID: " + comment.getFromComment() + " -couldn't post comment");
                     return false;
                 }
             }
             else
             {
-                logger.error("Creating comment - Car id: "+ ad.getCarId() + " not found");
+                logger.error("Creating comment-CarID: "+ ad.getCarId() + " not found");
                 return false;
             }
         }
         else
         {
-            logger.error("Creating comment - Ad id: "+ comment.getAdId() + " not found");
+            logger.error("Creating comment-AdID: "+ comment.getAdId() + " not found");
             return false;
         }
     }
@@ -203,13 +203,13 @@ public class CommentServiceImpl implements CommentService {
             }
             else
             {
-                logger.error("Creating reply - Comment id: "+ id + " not approved");
+                logger.error("Creating reply-CommentID: "+ id + " not approved");
                 return false;
             }
         }
         else
         {
-            logger.error("Creating reply - Comment id: "+ id + " not found");
+            logger.error("Creating reply-CommentID: "+ id + " not found");
             return false;
         }
     }
