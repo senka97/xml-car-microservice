@@ -87,10 +87,10 @@ public class CarController {
         CustomPrincipal cp = (CustomPrincipal) auth.getPrincipal();
 
         if (carService.rating(userId, adId, rate)) {
-            logger.info(MessageFormat.format("Rate:{0}-updated;AdID:{1};UserID:{2}", rate, adId, cp.getUserID()));
+            logger.info(MessageFormat.format("Rating:{0}-updated;AdID:{1};UserID:{2}", rate, adId, cp.getUserID()));
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
-            logger.info(MessageFormat.format("Rate:{0}-failed;AdID:{1};UserID:{2}", rate, adId, cp.getUserID()));
+            logger.info(MessageFormat.format("Rating-failed;AdID:{1};UserID:{2}", rate, adId, cp.getUserID()));
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
