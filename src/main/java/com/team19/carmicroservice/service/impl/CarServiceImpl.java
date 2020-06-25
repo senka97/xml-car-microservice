@@ -489,11 +489,11 @@ public class CarServiceImpl implements CarService {
         {
             car.setMileage(car.getMileage() + mileage);
             this.carRepository.save(car);
-            logger.info("Changing mileage - for car id: " + car.getId() + " - changed");
+            logger.info("Changing mileage-for carID: " + car.getId() + "-changed");
             return true;
         }
         else {
-            logger.error("Changing mileage - for car id: " + car.getId() + " - car not found");
+            logger.error("Changing mileage-for carID: " + car.getId() + "-car not found");
             return false;
         }
     }
