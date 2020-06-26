@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.validation.Valid;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +47,7 @@ public class CarClassController {
 
     @PostMapping(consumes = "application/json")
     @PreAuthorize("hasAuthority('car_class_create')")
-    public ResponseEntity<CarClassDTO> addCarClass(@RequestBody CarClassDTO carClassDTO) {
+    public ResponseEntity<CarClassDTO> addCarClass(@Valid @RequestBody CarClassDTO carClassDTO) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         CustomPrincipal cp = (CustomPrincipal) auth.getPrincipal();
 

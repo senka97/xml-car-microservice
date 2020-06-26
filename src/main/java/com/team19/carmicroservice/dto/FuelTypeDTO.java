@@ -2,9 +2,15 @@ package com.team19.carmicroservice.dto;
 
 import com.team19.carmicroservice.model.FuelType;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+
 public class FuelTypeDTO {
 
     private Long id;
+
+    @NotBlank(message="Name must not be empty.")
+    @Pattern(regexp="^[a-zA-Z0-9_ ]*$", message="Name must contain only letters and numbers.")
     private String name;
 
     public FuelTypeDTO() {

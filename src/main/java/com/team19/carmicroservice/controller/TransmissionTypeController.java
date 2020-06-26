@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.validation.Valid;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +47,7 @@ public class TransmissionTypeController {
 
     @PostMapping(consumes = "application/json")
     @PreAuthorize("hasAuthority('transmission_type_create')")
-    public ResponseEntity<TransmissionTypeDTO> addTransmissionType(@RequestBody TransmissionTypeDTO transmissionTypeDTO) {
+    public ResponseEntity<TransmissionTypeDTO> addTransmissionType(@Valid @RequestBody TransmissionTypeDTO transmissionTypeDTO) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         CustomPrincipal cp = (CustomPrincipal) auth.getPrincipal();
 
