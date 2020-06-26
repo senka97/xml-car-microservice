@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.validation.Valid;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +47,7 @@ public class FuelTypeController {
 
     @PostMapping(consumes = "application/json")
     @PreAuthorize("hasAuthority('fuel_type_create')")
-    public ResponseEntity<FuelTypeDTO> addFuelType(@RequestBody FuelTypeDTO fuelTypeDTO) {
+    public ResponseEntity<FuelTypeDTO> addFuelType(@Valid @RequestBody FuelTypeDTO fuelTypeDTO) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         CustomPrincipal cp = (CustomPrincipal) auth.getPrincipal();
 

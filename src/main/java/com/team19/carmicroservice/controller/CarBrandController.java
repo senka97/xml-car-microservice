@@ -14,6 +14,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +47,7 @@ public class CarBrandController {
 
     @PostMapping(consumes = "application/json")
     @PreAuthorize("hasAuthority('car_brand_create')")
-    public ResponseEntity<CarBrandDTO> addCarBrand(@RequestBody CarBrandDTO carBrandDTO) {
+    public ResponseEntity<CarBrandDTO> addCarBrand(@Valid @RequestBody CarBrandDTO carBrandDTO) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         CustomPrincipal cp = (CustomPrincipal) auth.getPrincipal();
 

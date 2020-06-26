@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.validation.Valid;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +45,7 @@ public class CarModelController {
 
     @PostMapping(value = "/brand/{id}")
     @PreAuthorize("hasAuthority('car_model_create')")
-    public ResponseEntity<CarModelDTO> addCarModel(@RequestBody CarModelDTO carModelDTO, @PathVariable Long id) {
+    public ResponseEntity<CarModelDTO> addCarModel(@Valid @RequestBody CarModelDTO carModelDTO, @PathVariable Long id) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         CustomPrincipal cp = (CustomPrincipal) auth.getPrincipal();
 
