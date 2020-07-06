@@ -35,6 +35,9 @@ public class Car {
     @Column(name="has_android_app")
     private boolean hasAndroidApp;
 
+    @Column(name="android_token")
+    private String androidToken;
+
     @Column(name="owner_id")
     private Long ownerId;
 
@@ -61,6 +64,9 @@ public class Car {
         this.hasAndroidApp = hasAndroidApp;
         this.images = new HashSet<>();
         this.comments = new HashSet<>();
+        if(hasAndroidApp){
+            System.out.println("Treba izgenerisati token.");
+        }
     }
 
     public Long getId() {
@@ -161,5 +167,13 @@ public class Car {
 
     public void setOwnerId(Long ownerId) {
         this.ownerId = ownerId;
+    }
+
+    public String getAndroidToken() {
+        return androidToken;
+    }
+
+    public void setAndroidToken(String androidToken) {
+        this.androidToken = androidToken;
     }
 }

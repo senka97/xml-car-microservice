@@ -76,6 +76,7 @@ public class CarServiceImpl implements CarService {
                 carDTO.setRate(car.getRate());
                 carDTO.setMileage(car.getMileage());
                 carDTO.setHasAndroidApp(car.getHasAndroidApp());
+                carDTO.setAndroidToken(car.getAndroidToken()); //ovo dodala za token
                 carDTO.setCarBrand(car.getCarModel().getCarBrand().getName());
                 carDTO.setCarModel(car.getCarModel().getName());
                 carDTO.setCarClass(car.getCarClass().getName());
@@ -138,6 +139,7 @@ public class CarServiceImpl implements CarService {
                 carDTO.setRate(car.getRate());
                 carDTO.setMileage(car.getMileage());
                 carDTO.setHasAndroidApp(car.getHasAndroidApp());
+                carDTO.setAndroidToken(car.getAndroidToken()); //ovo dodala za token
                 carDTO.setCarBrand(car.getCarModel().getCarBrand().getName());
                 carDTO.setCarModel(car.getCarModel().getName());
                 carDTO.setCarClass(car.getCarClass().getName());
@@ -194,6 +196,9 @@ public class CarServiceImpl implements CarService {
         car.setFuelType(fuelTypeService.findByName(carDTO.getFuelType()));
         car.setTransmissionType(transmissionTypeService.findByName(carDTO.getTransType()));
         car.setHasAndroidApp(carDTO.getHasAndroidApp());
+        if(carDTO.getHasAndroidApp()){ //ovo dodala za token
+            System.out.println("Treba izgenerisati token.");
+        }
         car.setMileage(carDTO.getMileage());
         car.setOwnerId(Long.parseLong(cp.getUserID()));
 
@@ -296,6 +301,7 @@ public class CarServiceImpl implements CarService {
                 carDTO.setChildrenSeats(car.getChildrenSeats());
                 carDTO.setFuelType(new FuelTypeDTO(car.getFuelType()));
                 carDTO.setHasAndroidApp(car.getHasAndroidApp());
+                carDTO.setAndroidToken(car.getAndroidToken()); //ovo dodala za token
                 carDTO.setMileage(car.getMileage());
                 carDTO.setRate(car.getRate());
                 carDTO.setTransType(new TransmissionTypeDTO(car.getTransmissionType()));
