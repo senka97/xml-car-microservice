@@ -17,6 +17,8 @@ public class ExistingCarDTO {
 
     private boolean hasAndroidApp;
 
+    private String androidToken;
+
     private CarBrandDTO carBrand;
 
     private CarModelDTO carModel;
@@ -116,5 +118,13 @@ public class ExistingCarDTO {
 
     public void setPhotos64(ArrayList<String> photos64) {
         this.photos64 = photos64;
+    }
+
+    public String getAndroidToken() {
+        return androidToken;
+    }
+
+    public void setAndroidToken(String androidToken) {
+        this.androidToken = androidToken;
     }
 }

@@ -25,6 +25,8 @@ public class CarDTO {
 
     private boolean hasAndroidApp;
 
+    private String androidToken;
+
     private String carBrand;
 
     private String carModel;
@@ -49,6 +51,7 @@ public class CarDTO {
             this.setRate(car.getRate());
             this.setMileage(car.getMileage());
             this.setHasAndroidApp(car.getHasAndroidApp());
+            this.setAndroidToken(car.getAndroidToken());
             this.setCarBrand(car.getCarModel().getCarBrand().getName());
             this.setCarModel(car.getCarModel().getName());
             this.setCarClass(car.getCarClass().getName());
@@ -175,5 +178,14 @@ public class CarDTO {
 
     public void setPhotos64(ArrayList<String> photos64) {
         this.photos64 = photos64;
+    }
+
+
+    public String getAndroidToken() {
+        return androidToken;
+    }
+
+    public void setAndroidToken(String androidToken) {
+        this.androidToken = androidToken;
     }
 }
