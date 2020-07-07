@@ -8,6 +8,7 @@ import com.team19.carmicroservice.model.Image;
 import com.team19.carmicroservice.repository.CarRepository;
 import com.team19.carmicroservice.security.CustomPrincipal;
 import com.team19.carmicroservice.service.CarService;
+import org.apache.commons.lang.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +77,7 @@ public class CarServiceImpl implements CarService {
                 carDTO.setRate(car.getRate());
                 carDTO.setMileage(car.getMileage());
                 carDTO.setHasAndroidApp(car.getHasAndroidApp());
+                carDTO.setAndroidToken(car.getAndroidToken()); //ovo dodala za token
                 carDTO.setCarBrand(car.getCarModel().getCarBrand().getName());
                 carDTO.setCarModel(car.getCarModel().getName());
                 carDTO.setCarClass(car.getCarClass().getName());
@@ -138,6 +140,7 @@ public class CarServiceImpl implements CarService {
                 carDTO.setRate(car.getRate());
                 carDTO.setMileage(car.getMileage());
                 carDTO.setHasAndroidApp(car.getHasAndroidApp());
+                carDTO.setAndroidToken(car.getAndroidToken()); //ovo dodala za token
                 carDTO.setCarBrand(car.getCarModel().getCarBrand().getName());
                 carDTO.setCarModel(car.getCarModel().getName());
                 carDTO.setCarClass(car.getCarClass().getName());
@@ -194,6 +197,12 @@ public class CarServiceImpl implements CarService {
         car.setFuelType(fuelTypeService.findByName(carDTO.getFuelType()));
         car.setTransmissionType(transmissionTypeService.findByName(carDTO.getTransType()));
         car.setHasAndroidApp(carDTO.getHasAndroidApp());
+        if(carDTO.getHasAndroidApp()){ //ovo dodala za token
+            System.out.println("Treba izgenerisati token.");
+            car.setAndroidToken(generateTokenString());
+            System.out.println(car.getAndroidToken());
+
+        }
         car.setMileage(carDTO.getMileage());
         car.setOwnerId(Long.parseLong(cp.getUserID()));
 
@@ -264,6 +273,7 @@ public class CarServiceImpl implements CarService {
             }
         }
         carDTO.setId(newCar.getId());
+        carDTO.setAndroidToken(newCar.getAndroidToken());
         System.out.println("****************DODAT*****************");
         return carDTO;
     }
@@ -296,6 +306,7 @@ public class CarServiceImpl implements CarService {
                 carDTO.setChildrenSeats(car.getChildrenSeats());
                 carDTO.setFuelType(new FuelTypeDTO(car.getFuelType()));
                 carDTO.setHasAndroidApp(car.getHasAndroidApp());
+                carDTO.setAndroidToken(car.getAndroidToken()); //ovo dodala za token
                 carDTO.setMileage(car.getMileage());
                 carDTO.setRate(car.getRate());
                 carDTO.setTransType(new TransmissionTypeDTO(car.getTransmissionType()));
@@ -521,4 +532,11 @@ public class CarServiceImpl implements CarService {
         return dimg;
     }
 
+    private String generateTokenString(){
+        int length = 20;
+        boolean useLetters = true;
+        boolean useNumbers = true;
+        String generatedString = RandomStringUtils.random(length, useLetters, useNumbers);
+        return generatedString;
+    }
 }

@@ -99,12 +99,12 @@ insert into fuel_type (name, removed) value ('Diesel', false);
 insert into fuel_type (name, removed) value ('Hybrid', false);
 insert into fuel_type (name, removed) value ('Electric', false);
 
-insert into car (children_seats, rate ,mileage, car_model_id, car_class_id, fuel_type_id, transmission_type_id, has_android_app, owner_id) value (1, 3.5, 5000, 1,1,1,2, true, 2);
-insert into car (children_seats, rate ,mileage, car_model_id, car_class_id, fuel_type_id, transmission_type_id, has_android_app, owner_id) value (0, 3.8, 2000, 2, 2,1,3, false, 2);
-insert into car (children_seats, rate ,mileage, car_model_id, car_class_id, fuel_type_id, transmission_type_id, has_android_app, owner_id) value (2, 4, 10000, 3, 5,2,2, true, 3);
-insert into car (children_seats, rate ,mileage, car_model_id, car_class_id, fuel_type_id, transmission_type_id, has_android_app, owner_id) value (1, 0, 12000, 7, 1, 5, 2, false, 3);
-insert into car (children_seats, rate ,mileage, car_model_id, car_class_id, fuel_type_id, transmission_type_id, has_android_app, owner_id) value (2, 0, 30000, 35, 1, 3, 2, false, 6);
-insert into car (children_seats, rate ,mileage, car_model_id, car_class_id, fuel_type_id, transmission_type_id, has_android_app, owner_id) value (0, 0, 50000, 52, 5, 2, 1, false, 6);
+insert into car (children_seats, rate ,mileage, car_model_id, car_class_id, fuel_type_id, transmission_type_id, has_android_app, android_token, owner_id) value (1, 3.5, 5000, 1,1,1,2, false, null, 2);
+insert into car (children_seats, rate ,mileage, car_model_id, car_class_id, fuel_type_id, transmission_type_id, has_android_app, android_token, owner_id) value (0, 3.8, 2000, 2, 2,1,3, false, null, 2);
+insert into car (children_seats, rate ,mileage, car_model_id, car_class_id, fuel_type_id, transmission_type_id, has_android_app, android_token, owner_id) value (2, 4, 10000, 3, 5,2,2, true, 'abcd123456789', 3);
+insert into car (children_seats, rate ,mileage, car_model_id, car_class_id, fuel_type_id, transmission_type_id, has_android_app, android_token, owner_id) value (1, 0, 12000, 7, 1, 5, 2, true,'123456789abcd', 3);
+insert into car (children_seats, rate ,mileage, car_model_id, car_class_id, fuel_type_id, transmission_type_id, has_android_app, android_token, owner_id) value (2, 0, 30000, 35, 1, 3, 2, false, null, 6);
+insert into car (children_seats, rate ,mileage, car_model_id, car_class_id, fuel_type_id, transmission_type_id, has_android_app, android_token, owner_id) value (0, 0, 50000, 52, 5, 2, 1, false, null, 6);
 
 --insert into car (car_class_id, car_model_id, transmission_type_id, fuel_type_id, children_seats, rate, mileage, has_android_app, owner_id)value (1, 1, 3, 2, 1, 3.5, 5000, true, 2);
 

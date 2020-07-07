@@ -2,31 +2,41 @@ package com.team19.carmicroservice.dto;
 
 public class MapData {
 
-    private Position position;
-    private String androidToken;
+    private double lat;
+    private double lng;
+    private String token;
 
     public MapData(){
 
     }
 
-    public MapData(Position position, String androidToken){
-        this.position = position;
-        this.androidToken = androidToken;
+    public MapData(double lat, double lng, String token){
+        this.lat = lat;
+        this.lng = lng;
+        this.token = token;
     }
 
-    public Position getPosition() {
-        return position;
+    public double getLat() {
+        return lat;
     }
 
-    public void setPosition(Position position) {
-        this.position = position;
+    public void setLat(double lat) {
+        this.lat = lat;
     }
 
-    public String getAndroidToken() {
-        return androidToken;
+    public double getLng() {
+        return lng;
     }
 
-    public void setAndroidToken(String androidToken) {
-        this.androidToken = androidToken;
+    public void setLng(double lng) {
+        this.lng = lng;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }
