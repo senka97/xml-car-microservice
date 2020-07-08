@@ -183,6 +183,7 @@ public class CommentController {
     }
 
     @GetMapping(value = "/comments/client/{id}")
+    @PreAuthorize("hasAuthority('client_update')")
     public List<CommentDTO> findAllRejectedComments(@PathVariable Long id) {
         logger.info(MessageFormat.format("CO-read-rejected;ClientID:{0}", id));
         return commentService.getAllRejectedComments(id);
